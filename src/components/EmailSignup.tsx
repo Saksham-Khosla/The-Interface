@@ -25,9 +25,27 @@ export default function EmailSignup({
     }
 
     setStatus("loading");
-    // Simulate API call — replace with ConvertKit / Beehiiv / Substack endpoint
-    await new Promise((r) => setTimeout(r, 900));
-    setStatus("success");
+
+    try {
+      const res = await fetch("/api/subscribe", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email }),
+      });
+
+      const data = await res.json().catch(() => ({}));
+
+      if (!res.ok) {
+        setErrorMsg(data?.error || "Something went wrong. Please try again.");
+        setStatus("idle");
+        return;
+      }
+
+      setStatus("success");
+    } catch {
+      setErrorMsg("Something went wrong. Please check your connection and try again.");
+      setStatus("idle");
+    }
   };
 
   if (status === "success") {
@@ -81,7 +99,7 @@ export default function EmailSignup({
         <p className="mt-2 text-xs text-red-400">{errorMsg}</p>
       )}
       <p className="mt-3 text-xs text-slate-500">
-        No spam. Unsubscribe anytime. Read by 12,000+ builders.
+        No spam. Unsubscribe anytime. One briefing a week.
       </p>
     </form>
   );

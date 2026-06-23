@@ -2,41 +2,6 @@
 
 import { useState } from "react";
 
-const socials = [
-  {
-    name: "Twitter / X",
-    handle: "@theinference",
-    href: "#",
-    icon: (
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-        <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
-      </svg>
-    ),
-  },
-  {
-    name: "LinkedIn",
-    handle: "The Inference",
-    href: "#",
-    icon: (
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-        <path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/>
-        <circle cx="4" cy="4" r="2"/>
-      </svg>
-    ),
-  },
-  {
-    name: "RSS Feed",
-    handle: "Subscribe via RSS",
-    href: "#",
-    icon: (
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-        <path d="M4 11a9 9 0 019 9M4 4a16 16 0 0116 16"/>
-        <circle cx="5" cy="19" r="1" fill="currentColor"/>
-      </svg>
-    ),
-  },
-];
-
 export default function ContactPage() {
   const [formState, setFormState] = useState({ name: "", email: "", message: "" });
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
@@ -60,7 +25,7 @@ export default function ContactPage() {
             Get in touch.
           </h1>
           <p className="text-base text-slate-400 leading-relaxed max-w-xl">
-            Have a story tip, a question about the newsletter, or just want to say hi? The Inference is run by one person, so replies might take a day or two — but they do happen.
+            Have a story tip, a question about a briefing, or an industry you think we should cover? We're a small team, so replies might take a day or two — but they do happen.
           </p>
         </div>
       </section>
@@ -70,7 +35,7 @@ export default function ContactPage() {
         <div className="mx-auto max-w-6xl">
           <div className="grid grid-cols-1 gap-16 lg:grid-cols-2">
             {/* Left: info */}
-            <div className="space-y-10">
+            <div className="space-y-8">
               {/* Email */}
               <div>
                 <p className="text-xs font-semibold uppercase tracking-widest text-blue-400 mb-3">Email</p>
@@ -83,29 +48,10 @@ export default function ContactPage() {
                 <p className="mt-1 text-sm text-slate-500">Replies within 1–2 business days.</p>
               </div>
 
-              {/* Socials */}
-              <div>
-                <p className="text-xs font-semibold uppercase tracking-widest text-blue-400 mb-4">Follow</p>
-                <div className="space-y-3">
-                  {socials.map((s) => (
-                    <a
-                      key={s.name}
-                      href={s.href}
-                      className="flex items-center gap-4 rounded-xl border border-white/5 bg-white/[0.02] p-4 hover:border-blue-500/20 hover:bg-white/[0.04] transition-all duration-200 group"
-                    >
-                      <div className="flex h-9 w-9 items-center justify-center rounded-lg border border-white/8 bg-white/5 text-slate-400 group-hover:text-blue-400 transition-colors">
-                        {s.icon}
-                      </div>
-                      <div>
-                        <p className="text-sm font-medium text-white">{s.name}</p>
-                        <p className="text-xs text-slate-500">{s.handle}</p>
-                      </div>
-                      <svg className="ml-auto text-slate-600 group-hover:text-slate-400 transition-colors" width="16" height="16" viewBox="0 0 16 16" fill="none">
-                        <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                      </svg>
-                    </a>
-                  ))}
-                </div>
+              <div className="rounded-2xl border border-white/5 bg-white/[0.02] p-6">
+                <p className="text-sm text-slate-400 leading-relaxed">
+                  Whether it's a correction, a tip on an industry shift we should be tracking, or a partnership idea — every message gets read.
+                </p>
               </div>
             </div>
 
@@ -121,7 +67,7 @@ export default function ContactPage() {
                     </svg>
                   </div>
                   <h3 className="text-base font-semibold text-white mb-2">Message sent!</h3>
-                  <p className="text-sm text-slate-400">Thanks for reaching out. I'll be in touch within a couple days.</p>
+                  <p className="text-sm text-slate-400">Thanks for reaching out. We'll be in touch within a couple days.</p>
                 </div>
               ) : (
                 <form onSubmit={handleSubmit} className="space-y-4">

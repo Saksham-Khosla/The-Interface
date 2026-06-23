@@ -1,38 +1,30 @@
 import type { Metadata } from "next";
 import CTABlock from "@/components/CTABlock";
 import AuthorCard from "@/components/AuthorCard";
+import { industries } from "@/lib/industries";
 
 export const metadata: Metadata = {
   title: "About",
   description:
-    "Learn about The Inference — a weekly AI newsletter written for founders, builders, and operators who want to understand AI without the noise.",
+    "The Inference is a weekly intelligence briefing on how AI is changing every industry — finance, education, law, healthcare, work, startups, and media.",
 };
-
-const topics = [
-  { label: "AI models & research", icon: "🧠" },
-  { label: "Developer tools & frameworks", icon: "🛠️" },
-  { label: "Startups & funding", icon: "🚀" },
-  { label: "Agents & automation", icon: "🤖" },
-  { label: "AI policy & safety", icon: "🔐" },
-  { label: "Practical how-tos", icon: "📋" },
-];
 
 const forWho = [
   {
-    label: "Founders",
-    description: "Decide where AI fits in your product and where it doesn't.",
+    label: "Founders & operators",
+    description: "Decide where AI fits in your product, team, or process — and where it doesn't yet.",
   },
   {
-    label: "Engineers",
-    description: "Stay current on models, tools, and emerging best practices.",
+    label: "Investors & analysts",
+    description: "Track which industries are seeing real AI adoption versus pilot fatigue.",
   },
   {
-    label: "Operators",
-    description: "Find real ways to use AI to do more with less.",
+    label: "Lawyers, educators, clinicians",
+    description: "Understand how AI is reshaping your specific profession, not just tech broadly.",
   },
   {
-    label: "Students",
-    description: "Build a sharp mental model of a fast-moving field.",
+    label: "Students & builders",
+    description: "Build a sharp, sector-aware mental model of where AI is headed.",
   },
 ];
 
@@ -48,7 +40,7 @@ export default function AboutPage() {
             What The Inference is — and why it exists.
           </h1>
           <p className="text-base text-slate-400 leading-relaxed">
-            There is more AI content being published today than any one person can read. The Inference exists to solve exactly that problem — by doing the reading, synthesizing the signal, and delivering only what matters.
+            AI is no longer just a tech story. It's a finance story, an education story, a law story, a healthcare story, and a work story. That's why we exist — to make those changes easier to understand, one industry at a time.
           </p>
         </div>
       </section>
@@ -58,37 +50,37 @@ export default function AboutPage() {
         <div className="mx-auto max-w-3xl">
           <p className="text-xs font-semibold uppercase tracking-widest text-blue-400 mb-4">Mission</p>
           <h2 className="text-2xl font-bold text-white mb-6">
-            Clarity over cleverness.
+            Understand AI through the industry you actually work in.
           </h2>
           <div className="space-y-4 text-base text-slate-400 leading-relaxed">
             <p>
-              The AI space moves fast, and most coverage moves even faster — chasing announcements, parroting press releases, and adding noise without adding understanding.
+              Most AI coverage treats every industry the same — as if a hospital, a hedge fund, and a high school are all adopting the same tools at the same pace. They're not. AI is moving through finance, law, healthcare, education, work, startups, and media in completely different ways, at completely different speeds, for completely different reasons.
             </p>
             <p>
-              The Inference takes a different approach. Every issue asks: <em className="text-slate-300">what does this actually mean for people building things?</em> We skip the hype cycle and go straight to the implications.
+              We take a different approach. Every briefing asks: <em className="text-slate-300">what does this actually mean for people working in this specific field?</em> We skip the generic "AI is changing everything" framing and go straight to the industry-specific implications.
             </p>
             <p>
-              The goal is that 10 minutes with The Inference each week leaves you smarter — not just more informed — about the most consequential technology shift of our time.
+              The goal is that 10 minutes with us each week leaves you sharper — not just more informed — about how AI is reshaping the part of the world you actually operate in.
             </p>
           </div>
         </div>
       </section>
 
-      {/* Topics */}
+      {/* Industries we cover */}
       <section className="py-20 px-4 sm:px-6 lg:px-8 border-b border-white/5">
         <div className="mx-auto max-w-6xl">
           <div className="grid grid-cols-1 gap-12 lg:grid-cols-2 items-start">
             <div>
               <p className="text-xs font-semibold uppercase tracking-widest text-blue-400 mb-4">Coverage</p>
-              <h2 className="text-2xl font-bold text-white mb-4">What topics we cover.</h2>
+              <h2 className="text-2xl font-bold text-white mb-4">Industries we cover.</h2>
               <p className="text-sm text-slate-400 leading-relaxed mb-8">
-                We don't cover everything — we cover what matters. Here's where The Inference focuses its attention:
+                We don't cover everything — we cover where AI is having the most real-world impact:
               </p>
               <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-                {topics.map((t) => (
-                  <div key={t.label} className="flex items-center gap-3 rounded-xl border border-white/5 bg-white/[0.02] px-4 py-3">
-                    <span className="text-lg">{t.icon}</span>
-                    <span className="text-sm font-medium text-slate-300">{t.label}</span>
+                {industries.map((ind) => (
+                  <div key={ind.slug} className="flex items-center gap-3 rounded-xl border border-white/5 bg-white/[0.02] px-4 py-3">
+                    <span className="text-lg">{ind.icon}</span>
+                    <span className="text-sm font-medium text-slate-300">{ind.name}</span>
                   </div>
                 ))}
               </div>
@@ -97,9 +89,9 @@ export default function AboutPage() {
             {/* For who */}
             <div>
               <p className="text-xs font-semibold uppercase tracking-widest text-blue-400 mb-4">Audience</p>
-              <h2 className="text-2xl font-bold text-white mb-4">Who The Inference is for.</h2>
+              <h2 className="text-2xl font-bold text-white mb-4">Who we're for.</h2>
               <p className="text-sm text-slate-400 leading-relaxed mb-8">
-                Not for everyone. For people who are building things and need to stay sharp on AI.
+                Not for everyone. For people whose work is being reshaped by AI right now, in a specific field.
               </p>
               <div className="space-y-3">
                 {forWho.map((w) => (
@@ -117,8 +109,8 @@ export default function AboutPage() {
       {/* Author */}
       <section className="py-20 px-4 sm:px-6 lg:px-8 border-b border-white/5">
         <div className="mx-auto max-w-3xl">
-          <p className="text-xs font-semibold uppercase tracking-widest text-blue-400 mb-4">The author</p>
-          <h2 className="text-2xl font-bold text-white mb-8">Written by one person.</h2>
+          <p className="text-xs font-semibold uppercase tracking-widest text-blue-400 mb-4">Who writes this</p>
+          <h2 className="text-2xl font-bold text-white mb-8">The people behind it.</h2>
           <AuthorCard />
         </div>
       </section>

@@ -6,8 +6,8 @@ interface CTABlockProps {
 }
 
 export default function CTABlock({
-  title = "Stay ahead of AI — every week.",
-  subtitle = "Join 12,000+ founders, builders, and operators who read The Inference to understand what's actually happening in AI.",
+  title = "Get smarter about AI, one industry at a time.",
+  subtitle = "Join readers tracking the real-world impact of artificial intelligence across business, work, and society.",
 }: CTABlockProps) {
   return (
     <section id="subscribe" className="relative overflow-hidden rounded-3xl border border-blue-500/10 bg-gradient-to-br from-navy-800 via-navy-900 to-navy-950 p-8 sm:p-12">

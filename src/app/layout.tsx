@@ -5,25 +5,33 @@ import Footer from "@/components/Footer";
 
 export const metadata: Metadata = {
   title: {
-    default: "The Inference — Weekly AI Intelligence",
+    default: "The Inference — How AI Is Changing Every Industry",
     template: "%s | The Inference",
   },
   description:
-    "A weekly newsletter breaking down the most important AI tools, trends, startups, and research — without the hype. Read by 12,000+ founders, builders, and operators.",
-  keywords: ["AI newsletter", "artificial intelligence", "machine learning", "AI tools", "AI research", "The Inference"],
+    "The Inference is a weekly intelligence briefing on how AI is reshaping finance, education, law, healthcare, startups, media, and the future of work.",
+  keywords: [
+    "AI newsletter",
+    "AI in finance",
+    "AI in healthcare",
+    "AI in law",
+    "AI in education",
+    "future of work",
+    "The Inference",
+  ],
   authors: [{ name: "The Inference" }],
   openGraph: {
     type: "website",
     siteName: "The Inference",
-    title: "The Inference — Weekly AI Intelligence",
+    title: "The Inference — How AI Is Changing Every Industry",
     description:
-      "A weekly newsletter breaking down the most important AI tools, trends, startups, and research — without the hype.",
+      "A weekly briefing breaking down how AI is reshaping finance, education, law, healthcare, startups, media, and work.",
   },
   twitter: {
     card: "summary_large_image",
-    title: "The Inference — Weekly AI Intelligence",
+    title: "The Inference — How AI Is Changing Every Industry",
     description:
-      "A weekly newsletter breaking down AI tools, trends, and research — without the hype.",
+      "A weekly briefing on how AI is reshaping every industry — without the hype.",
   },
 };
 
@@ -34,7 +42,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className="scroll-smooth">
-      <body className="min-h-screen bg-[#050914] antialiased">
+      <body className="min-h-screen bg-[#040710] antialiased">
         <Header />
         <main className="pt-16">{children}</main>
         <Footer />

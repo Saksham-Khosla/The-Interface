@@ -3,7 +3,8 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import CTABlock from "@/components/CTABlock";
 import IssueCard from "@/components/IssueCard";
-import { issues, getIssueBySlug, categoryColors } from "@/lib/issues";
+import CategoryTag from "@/components/CategoryTag";
+import { issues, getIssueBySlug } from "@/lib/issues";
 
 interface Props {
   params: { slug: string };
@@ -24,41 +25,38 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 // Full article content for the featured slug
 const articleContent: Record<string, React.ReactNode> = {
-  "ai-agents-are-coming": (
+  "ai-agents-entering-finance": (
     <div className="prose-custom">
       <p>
-        Something shifted in Q1 2026. Autonomous AI agents stopped being a research demo and started appearing in production pipelines. The companies deploying them aren't talking about it loudly — competitive advantage and all that — but if you look at the job postings, the GitHub repos, and the tool usage numbers, the picture is clear.
+        Something shifted inside financial institutions this year. Autonomous AI agents stopped being a slide in an innovation-team deck and started showing up in actual reconciliation queues, first-pass credit memos, and trading desk research workflows. No one is announcing this loudly — in finance, a quiet edge is a real edge — but the hiring patterns and vendor contracts tell the story clearly enough.
       </p>
-      <h2>What agentic AI actually means</h2>
+      <h2>Where agents are actually being trusted</h2>
       <p>
-        Strip away the hype and an "agent" is just an LLM that can take actions in a loop. It gets a goal, generates a plan, executes steps, observes results, and iterates. The thing that makes this different from a chatbot isn't the model — it's the <strong>feedback loop</strong>.
-      </p>
-      <p>
-        When a model can see the results of its own actions and course-correct, you unlock a completely different class of tasks. Tasks that previously required continuous human attention can now run unattended. Not perfectly — but well enough to be useful.
-      </p>
-      <h2>Which frameworks are winning</h2>
-      <p>
-        Three names keep coming up in serious engineering conversations: <strong>LangGraph</strong> for stateful multi-agent workflows, <strong>CrewAI</strong> for teams of specialized agents, and increasingly <strong>raw OpenAI/Anthropic function calling</strong> for teams that want full control and minimal abstraction.
+        Strip away the marketing and an "agent" in a financial context is an LLM wired into a loop: it pulls data, drafts an output, checks it against a rule set, and flags exceptions for a human. The places this is working best share one trait — <strong>the cost of a wrong answer is recoverable</strong>.
       </p>
       <p>
-        The pattern I'm seeing: startups start with LangGraph or CrewAI, hit edge cases, and then either go deeper into the framework or strip back to first principles. Neither is wrong. The frameworks are maturing quickly.
+        Reconciliation, document summarization, and first-draft client reporting are the early winners. A junior analyst's job hasn't disappeared, but the first 60% of the task — gathering, formatting, flagging anomalies — increasingly happens before a human ever opens the file.
       </p>
-      <h2>What it signals for how software gets built</h2>
+      <h2>Where firms are still holding the line</h2>
       <p>
-        The most underrated shift isn't task automation — it's <strong>what gets worth building</strong>. When agents can handle implementation given a spec, the bottleneck moves upstream to product thinking and downstream to evaluation/testing. Engineers who understand both ends of that spectrum will be most valuable.
+        Trading execution, credit decisions, and anything client-facing with regulatory exposure remain firmly human-gated. Compliance teams have made clear that an agent acting autonomously on capital is a different risk category entirely from an agent drafting a memo a human signs off on.
       </p>
       <p>
-        It also changes the unit economics of software. Workflows that were too expensive to build (because human hours cost too much) suddenly become viable when an agent can handle 80% of the execution. Expect a wave of "previously impossible" products in 2026.
+        That distinction — <em>agent drafts, human decides</em> — is the operating model most institutions have quietly settled on for now. It's less exciting than full autonomy, but it's the version that's actually shipping.
+      </p>
+      <h2>What this means for talent</h2>
+      <p>
+        The honest tension: the tasks agents are absorbing are exactly the tasks junior analysts used to learn the business through. Some firms are restructuring early-career roles around <strong>reviewing and correcting agent output</strong> rather than producing it from scratch — a real shift in how financial literacy gets built on the job.
       </p>
       <h2>The honest caveats</h2>
       <ul>
-        <li>Agents fail in weird ways. Evaluation is hard and mostly unsolved.</li>
-        <li>Context windows still matter. Long-running agents hit limits.</li>
-        <li>Trust and permissions are a genuine security surface.</li>
-        <li>Most "agentic" demos are cherry-picked. Production reality is messier.</li>
+        <li>Model outputs still need to be auditable — a black-box recommendation doesn't satisfy most compliance frameworks.</li>
+        <li>Data access is the real bottleneck, not model capability. Most firms' internal data isn't agent-ready yet.</li>
+        <li>Vendor claims of "full automation" are almost always describing a narrow, well-scoped workflow.</li>
+        <li>Regulatory guidance is still catching up — expect more formal rules within 12–18 months.</li>
       </ul>
       <p>
-        None of this makes agents less interesting. It makes them <em>actually</em> interesting — because the hard parts are exactly where leverage lives for builders paying attention.
+        None of this makes agentic finance less significant. It makes it a slower, more deliberate transformation than the headlines suggest — which, for an industry built on managing risk, might be exactly the right pace.
       </p>
     </div>
   ),
@@ -68,9 +66,10 @@ export default function IssuePage({ params }: Props) {
   const issue = getIssueBySlug(params.slug);
   if (!issue) notFound();
 
-  const tagClass = categoryColors[issue.category] ?? "bg-slate-500/10 text-slate-400 border border-slate-500/20";
   const content = articleContent[params.slug];
-  const relatedIssues = issues.filter((i) => i.slug !== params.slug).slice(0, 3);
+  const relatedIssues = issues
+    .filter((i) => i.slug !== params.slug && i.category !== issue.category)
+    .slice(0, 3);
 
   return (
     <div>
@@ -83,13 +82,11 @@ export default function IssuePage({ params }: Props) {
               <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
                 <path d="M9 3L5 7l4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
               </svg>
-              All issues
+              All briefings
             </Link>
           </div>
           <div className="flex flex-wrap items-center gap-3 mb-5">
-            <span className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ${tagClass}`}>
-              {issue.category}
-            </span>
+            <CategoryTag category={issue.category} />
             <span className="text-xs text-slate-500">{issue.readingTime} min read</span>
           </div>
           <h1 className="text-3xl font-bold tracking-tight text-white sm:text-4xl lg:text-5xl leading-tight mb-5">
@@ -101,10 +98,10 @@ export default function IssuePage({ params }: Props) {
           {/* Byline */}
           <div className="flex items-center gap-3">
             <div className="h-9 w-9 rounded-full bg-gradient-to-br from-blue-500 to-indigo-700 flex items-center justify-center text-xs font-bold text-white">
-              TI
+              AI
             </div>
             <div>
-              <p className="text-sm font-medium text-white">The Inference</p>
+              <p className="text-sm font-medium text-white">Our Editorial Team</p>
               <time className="text-xs text-slate-500">{issue.date}</time>
             </div>
           </div>
@@ -119,17 +116,17 @@ export default function IssuePage({ params }: Props) {
           ) : (
             <div className="prose-custom">
               <p>
-                This is a placeholder for the full article on <strong>{issue.title}</strong>. Replace this content with your actual newsletter copy.
+                This is a placeholder for the full briefing on <strong>{issue.title}</strong>. Replace this content with your actual reporting and analysis.
               </p>
               <p>
-                Each issue of The Inference is written to give readers a clear-eyed, practical understanding of what's happening in AI — without the noise, the hype, or the endless link roundups.
+                Each briefing we publish is written to give readers a clear-eyed, practical understanding of how AI is playing out in {issue.category.toLowerCase()} — without the noise, the hype, or the generic "AI is changing everything" framing.
               </p>
-              <h2>What you'll find in this issue</h2>
+              <h2>What you'll find in this briefing</h2>
               <p>
-                A deep analysis of {issue.title.toLowerCase()}, what it means for builders, and what you should do with this information. Written with context, not just a hot take.
+                A focused analysis of {issue.title.toLowerCase()}, what it means for people working in {issue.category.toLowerCase()}, and what to watch next. Written with industry context, not just a hot take.
               </p>
               <p>
-                This is where the actual newsletter content goes. Each issue is typically 1,200–2,000 words — long enough to be substantive, short enough to finish in one sitting.
+                This is where the full briefing goes. Each issue typically runs 1,200–2,000 words — long enough to be substantive, short enough to finish in one sitting.
               </p>
             </div>
           )}
@@ -137,17 +134,18 @@ export default function IssuePage({ params }: Props) {
           {/* Pull quote */}
           <blockquote className="my-12 rounded-2xl border border-blue-500/15 bg-blue-500/5 p-6">
             <p className="text-lg font-medium text-white leading-snug italic mb-3">
-              "The most underrated shift isn't task automation — it's what gets worth building."
+              "Agent drafts, human decides — it's less exciting than full autonomy, but it's the version that's actually shipping."
             </p>
-            <cite className="text-sm text-slate-400 not-italic">— The Inference, Issue #{issues.findIndex(i => i.slug === params.slug) + 37}</cite>
+            <cite className="text-sm text-slate-400 not-italic">— Our {issue.category} briefing</cite>
           </blockquote>
         </div>
       </section>
 
-      {/* Related issues */}
+      {/* Related briefings */}
       <section className="py-16 px-4 sm:px-6 lg:px-8 border-t border-white/5">
         <div className="mx-auto max-w-6xl">
-          <h2 className="text-xl font-semibold text-white mb-8">More issues</h2>
+          <h2 className="text-xl font-semibold text-white mb-2">Related briefings</h2>
+          <p className="text-sm text-slate-500 mb-8">From other industries we cover</p>
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {relatedIssues.map((rel) => (
               <IssueCard key={rel.slug} issue={rel} />
@@ -160,8 +158,8 @@ export default function IssuePage({ params }: Props) {
       <section className="py-16 px-4 sm:px-6 lg:px-8 border-t border-white/5">
         <div className="mx-auto max-w-6xl">
           <CTABlock
-            title="Enjoyed this issue?"
-            subtitle="Subscribe free and get The Inference delivered to your inbox every Tuesday. It takes 10 seconds to sign up."
+            title="Enjoyed this briefing?"
+            subtitle="Subscribe free and get our briefings delivered to your inbox every Tuesday. It takes 10 seconds to sign up."
           />
         </div>
       </section>

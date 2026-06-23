@@ -3,9 +3,11 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
+import Logo from "./Logo";
 
 const navLinks = [
   { href: "/", label: "Home" },
+  { href: "/industries", label: "Industries" },
   { href: "/issues", label: "Issues" },
   { href: "/about", label: "About" },
   { href: "/contact", label: "Contact" },
@@ -20,15 +22,8 @@ export default function Header() {
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between">
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-2 group">
-            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-blue-500 to-blue-700 shadow-lg shadow-blue-500/20 group-hover:shadow-blue-500/40 transition-shadow duration-300">
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                <path d="M3 8h4M9 4l4 4-4 4" stroke="white" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
-              </svg>
-            </div>
-            <span className="text-[15px] font-semibold tracking-tight text-white">
-              The Inference
-            </span>
+          <Link href="/" className="group">
+            <Logo />
           </Link>
 
           {/* Desktop nav */}

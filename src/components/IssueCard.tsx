@@ -1,5 +1,6 @@
 import Link from "next/link";
-import { Issue, categoryColors } from "@/lib/issues";
+import { Issue } from "@/lib/issues";
+import CategoryTag from "./CategoryTag";
 
 interface IssueCardProps {
   issue: Issue;
@@ -7,16 +8,12 @@ interface IssueCardProps {
 }
 
 export default function IssueCard({ issue, variant = "default" }: IssueCardProps) {
-  const tagClass = categoryColors[issue.category] ?? "bg-slate-500/10 text-slate-400 border border-slate-500/20";
-
   return (
     <Link href={`/issues/${issue.slug}`} className="group block">
       <article className={`h-full rounded-2xl border border-white/5 bg-white/[0.02] p-6 transition-all duration-300 hover:border-blue-500/20 hover:bg-white/[0.04] hover:shadow-xl hover:shadow-blue-500/5 ${variant === "featured" ? "flex flex-col" : ""}`}>
         {/* Top row */}
         <div className="flex items-start justify-between gap-4 mb-4">
-          <span className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ${tagClass}`}>
-            {issue.category}
-          </span>
+          <CategoryTag category={issue.category} />
           <div className="flex items-center gap-1.5 text-xs text-slate-500 flex-shrink-0">
             <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
               <circle cx="6" cy="6" r="5" stroke="currentColor" strokeWidth="1.2"/>

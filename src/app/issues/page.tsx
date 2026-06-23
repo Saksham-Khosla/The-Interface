@@ -1,13 +1,11 @@
 import type { Metadata } from "next";
-import IssueCard from "@/components/IssueCard";
-import SectionHeading from "@/components/SectionHeading";
 import CTABlock from "@/components/CTABlock";
-import { issues } from "@/lib/issues";
+import IssuesGrid from "./IssuesGrid";
 
 export const metadata: Metadata = {
-  title: "All Issues",
+  title: "Issues",
   description:
-    "Browse every issue of The Inference — weekly AI intelligence covering tools, research, startups, and models.",
+    "Browse every briefing from The Inference — filterable by industry, from finance and law to healthcare, work, and media.",
 };
 
 export default function IssuesPage() {
@@ -21,10 +19,10 @@ export default function IssuesPage() {
             Archive
           </p>
           <h1 className="text-4xl font-bold tracking-tight text-white sm:text-5xl mb-4">
-            All issues.
+            All briefings.
           </h1>
           <p className="text-base text-slate-400 max-w-xl leading-relaxed">
-            Every issue of The Inference, from the latest deep dive to the full back catalog. Pick any topic and dive in.
+            Every briefing we've published, organised by industry. Filter by sector or browse the full archive.
           </p>
         </div>
       </section>
@@ -32,41 +30,7 @@ export default function IssuesPage() {
       {/* Issues grid */}
       <section className="py-16 px-4 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-6xl">
-          <div className="mb-8 flex items-center justify-between">
-            <p className="text-sm text-slate-500">
-              {issues.length} issues published
-            </p>
-            {/* Category filter placeholder */}
-            <div className="flex gap-2 flex-wrap">
-              {["All", "Agents", "Models", "Industry", "Products", "Operations"].map((cat) => (
-                <button
-                  key={cat}
-                  className={`rounded-full border px-3 py-1 text-xs font-medium transition-colors ${
-                    cat === "All"
-                      ? "border-blue-500/40 bg-blue-500/10 text-blue-300"
-                      : "border-white/8 text-slate-500 hover:border-white/15 hover:text-slate-300"
-                  }`}
-                >
-                  {cat}
-                </button>
-              ))}
-            </div>
-          </div>
-
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {issues.map((issue) => (
-              <IssueCard key={issue.slug} issue={issue} />
-            ))}
-          </div>
-
-          {/* Empty state (hidden when issues exist) */}
-          {issues.length === 0 && (
-            <div className="py-24 text-center">
-              <div className="mb-4 text-4xl">📬</div>
-              <h3 className="text-lg font-semibold text-white mb-2">No issues yet</h3>
-              <p className="text-sm text-slate-400">The first issue drops soon. Subscribe to get it.</p>
-            </div>
-          )}
+          <IssuesGrid />
         </div>
       </section>
 
@@ -74,8 +38,8 @@ export default function IssuesPage() {
       <section className="py-16 px-4 sm:px-6 lg:px-8 border-t border-white/5">
         <div className="mx-auto max-w-6xl">
           <CTABlock
-            title="Get the next issue in your inbox."
-            subtitle="Subscribe free and receive every new issue of The Inference the moment it drops — every Tuesday."
+            title="Get the next briefing in your inbox."
+            subtitle="Subscribe free and receive every new briefing the moment it drops — every Tuesday."
           />
         </div>
       </section>
