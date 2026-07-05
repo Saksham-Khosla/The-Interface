@@ -20,18 +20,28 @@ export const metadata: Metadata = {
     "The Inference",
   ],
   authors: [{ name: "The Inference" }],
+  icons: {
+    icon: [
+      { url: "/icon-16.png", sizes: "16x16", type: "image/png" },
+      { url: "/icon-32.png", sizes: "32x32", type: "image/png" },
+      { url: "/icon-64.png", sizes: "64x64", type: "image/png" },
+    ],
+    apple: { url: "/icon-180.png", sizes: "180x180", type: "image/png" },
+  },
   openGraph: {
     type: "website",
     siteName: "The Inference",
     title: "The Inference — How AI Is Changing Every Industry",
     description:
       "A weekly briefing breaking down how AI is reshaping finance, education, law, healthcare, startups, media, and work.",
+    images: [{ url: "/social-card-1200x630.png", width: 1200, height: 630 }],
   },
   twitter: {
     card: "summary_large_image",
     title: "The Inference — How AI Is Changing Every Industry",
     description:
       "A weekly briefing on how AI is reshaping every industry — without the hype.",
+    images: ["/social-card-1200x630.png"],
   },
 };
 

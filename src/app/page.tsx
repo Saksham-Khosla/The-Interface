@@ -1,11 +1,9 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import EmailSignup from "@/components/EmailSignup";
-import IssueCard from "@/components/IssueCard";
 import IndustryCard from "@/components/IndustryCard";
 import SectionHeading from "@/components/SectionHeading";
 import CTABlock from "@/components/CTABlock";
-import { getFeaturedIssues } from "@/lib/issues";
 import { industries } from "@/lib/industries";
 
 export const metadata: Metadata = {
@@ -62,8 +60,6 @@ const benefits = [
 ];
 
 export default function HomePage() {
-  const featuredIssues = getFeaturedIssues();
-
   return (
     <div>
       {/* Hero */}
@@ -136,30 +132,23 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Latest Briefings */}
+      {/* Coming Soon */}
       <section className="py-24 px-4 sm:px-6 lg:px-8 border-t border-white/5">
         <div className="mx-auto max-w-6xl">
-          <div className="flex items-end justify-between mb-12">
-            <SectionHeading
-              eyebrow="Latest briefings"
-              title="Recent deep dives."
-            />
-            <Link
-              href="/issues"
-              className="hidden sm:inline-flex text-sm text-blue-400 hover:text-blue-300 transition-colors font-medium"
-            >
-              Browse all briefings →
-            </Link>
-          </div>
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {featuredIssues.map((issue) => (
-              <IssueCard key={issue.slug} issue={issue} variant="featured" />
-            ))}
-          </div>
-          <div className="mt-8 sm:hidden">
-            <Link href="/issues" className="text-sm text-blue-400 font-medium">
-              Browse all briefings →
-            </Link>
+          <SectionHeading
+            eyebrow="Briefings"
+            title="First issue dropping soon."
+          />
+          <div className="rounded-2xl border border-white/5 bg-white/[0.02] p-12 text-center">
+            <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-blue-500/10 border border-blue-500/10 mx-auto">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                <path d="M2 6l8 6 8-6M2 6v10h16V6" stroke="#60a5fa" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+            </div>
+            <h3 className="text-lg font-semibold text-white mb-2">We are working on our first briefing.</h3>
+            <p className="text-sm text-slate-400 max-w-sm mx-auto">
+              Subscribe below and you will be the first to know when it drops.
+            </p>
           </div>
         </div>
       </section>

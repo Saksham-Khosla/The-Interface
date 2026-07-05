@@ -22,9 +22,7 @@ export default function Header() {
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between">
           {/* Logo */}
-          <Link href="/" className="group">
-            <Logo />
-          </Link>
+          <Logo />
 
           {/* Desktop nav */}
           <nav className="hidden md:flex items-center gap-6">

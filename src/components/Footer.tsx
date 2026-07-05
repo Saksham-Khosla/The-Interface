@@ -8,9 +8,7 @@ export default function Footer() {
         <div className="grid grid-cols-1 gap-12 md:grid-cols-3">
           {/* Brand */}
           <div className="space-y-4">
-            <Link href="/">
-              <Logo />
-            </Link>
+            <Logo />
             <p className="text-sm text-slate-400 leading-relaxed max-w-xs">
               A weekly intelligence briefing on how AI is changing every industry — from finance and law to healthcare and work.
             </p>
