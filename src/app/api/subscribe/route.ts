@@ -12,9 +12,12 @@ const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 export async function POST(req: NextRequest) {
   let email: string | undefined;
 
+  let industries: string[] = [];
+
   try {
     const body = await req.json();
     email = body?.email;
+    industries = Array.isArray(body?.industries) ? body.industries : [];
   } catch {
     return NextResponse.json({ error: "Invalid request body." }, { status: 400 });
   }
@@ -49,6 +52,7 @@ export async function POST(req: NextRequest) {
           send_welcome_email: true,
           utm_source: "website",
           utm_medium: "organic",
+          utm_campaign: industries.length > 0 ? industries.join(",") : "general",
         }),
       }
     );
