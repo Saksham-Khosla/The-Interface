@@ -476,13 +476,6 @@ function PersonalisedHome({
       <section className="relative overflow-hidden border-b border-white/5 py-20 px-4 sm:px-6 lg:px-8">
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_40%_at_50%_0%,rgba(59,130,246,0.12),transparent)] pointer-events-none" />
         <div className="mx-auto max-w-6xl relative z-10">
-          <div className="inline-flex items-center gap-2 rounded-full border border-blue-500/20 bg-blue-500/8 px-4 py-1.5 mb-6">
-            <span className="h-1.5 w-1.5 rounded-full bg-blue-400 animate-pulse" />
-            <span className="text-xs font-medium text-blue-300">
-              Your personalised feed
-            </span>
-          </div>
-
           <h1 className="text-4xl sm:text-6xl font-bold text-white tracking-tight mb-4 leading-tight">
             Your{" "}
             <span className="bg-gradient-to-r from-sky-300 to-blue-500 bg-clip-text text-transparent">
