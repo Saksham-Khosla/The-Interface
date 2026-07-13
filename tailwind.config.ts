@@ -9,50 +9,43 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        navy: {
-          950: "#040710",
-          900: "#070c1a",
-          800: "#0c1428",
-          700: "#101c38",
-          600: "#172650",
+        bg: "#F3F1EA",
+        surface: "#FAF9F5",
+        ink: {
+          DEFAULT: "#151513",
+          2: "#6C6962",
+          3: "#9A958E",
         },
-        electric: {
-          300: "#7dd3fc",
-          400: "#60a5fa",
-          500: "#3b82f6",
-          600: "#2563eb",
+        rule: {
+          DEFAULT: "#CCC8BE",
+          lt: "#E0DBD2",
         },
-        slate: {
-          50: "#f8fafc",
-        },
+        cobalt: "#4165E8",
+        lime: "#EFFFA5",
+        blush: "#F5E5DF",
+        "ti-purple": "#33278C",
       },
       fontFamily: {
-        sans: ["Inter", "system-ui", "sans-serif"],
-        display: ["Cal Sans", "Inter", "system-ui", "sans-serif"],
+        sans: ["var(--font-jakarta)", "system-ui", "sans-serif"],
       },
-      backgroundImage: {
-        "grid-pattern":
-          "linear-gradient(rgba(59,130,246,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(59,130,246,0.04) 1px, transparent 1px)",
-        "hero-glow":
-          "radial-gradient(ellipse 80% 50% at 50% -10%, rgba(59,130,246,0.18), transparent)",
-      },
-      backgroundSize: {
-        grid: "60px 60px",
+      maxWidth: {
+        editorial: "1320px",
       },
       animation: {
-        "fade-up": "fadeUp 0.6s ease-out forwards",
-        "fade-in": "fadeIn 0.4s ease-out forwards",
-        pulse: "pulse 2s cubic-bezier(0.4,0,0.6,1) infinite",
+        "fade-up": "fadeUp 0.38s ease 0.06s both",
+        "blink": "blink 0.85s step-end infinite",
       },
       keyframes: {
         fadeUp: {
-          "0%": { opacity: "0", transform: "translateY(20px)" },
+          "0%": { opacity: "0", transform: "translateY(10px)" },
           "100%": { opacity: "1", transform: "translateY(0)" },
         },
-        fadeIn: {
-          "0%": { opacity: "0" },
-          "100%": { opacity: "1" },
+        blink: {
+          "50%": { opacity: "0" },
         },
+      },
+      transitionTimingFunction: {
+        editorial: "cubic-bezier(0.22, 1, 0.36, 1)",
       },
     },
   },

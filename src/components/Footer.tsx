@@ -1,56 +1,101 @@
-import Link from "next/link";
-import Logo from "./Logo";
+"use client";
+
+const ISSUE_NUM = 98;
+const ISSUE_DATE = "Monday, 14 July 2026";
 
 export default function Footer() {
+  const goView = (view: string) => {
+    window.dispatchEvent(new CustomEvent("ti:goView", { detail: { view } }));
+  };
+
+  const openEditModal = () => {
+    window.dispatchEvent(new CustomEvent("ti:openEditModal"));
+  };
+
   return (
-    <footer className="border-t border-white/5 bg-navy-950 px-4 py-16">
-      <div className="mx-auto max-w-6xl">
-        <div className="grid grid-cols-1 gap-12 md:grid-cols-3">
+    <footer role="contentinfo" style={{ background: "var(--ink)" }}>
+      <div style={{ maxWidth: "var(--w)", margin: "0 auto", padding: "0 var(--pad)" }}>
+        {/* Top grid */}
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "1.2fr 1fr 1fr",
+            gap: 56,
+            padding: "48px 0 36px",
+            borderBottom: "1px solid rgba(255,255,255,0.08)",
+          }}
+        >
           {/* Brand */}
-          <div className="space-y-4">
-            <Logo />
-            <p className="text-sm text-slate-400 leading-relaxed max-w-xs">
-              A weekly intelligence briefing on how AI is changing every industry — from finance and law to healthcare and work.
+          <div>
+            <span style={{ fontSize: 15, fontWeight: 800, letterSpacing: "-0.025em", color: "#fff", display: "block", marginBottom: 10 }}>
+              The Inference
+            </span>
+            <p style={{ fontSize: 13, lineHeight: 1.65, color: "rgba(255,255,255,0.38)" }}>
+              One story per industry, per week. What AI is actually changing — not what the press release says.
             </p>
           </div>
 
-          {/* Links */}
-          <div className="space-y-3">
-            <p className="text-xs font-medium uppercase tracking-widest text-slate-500">Navigate</p>
-            {[
-              { href: "/", label: "Home" },
-              { href: "/industries", label: "Industries" },
-              { href: "/issues", label: "Issues" },
-              { href: "/about", label: "About" },
-              { href: "/contact", label: "Contact" },
-            ].map((link) => (
-              <Link key={link.href} href={link.href} className="block text-sm text-slate-400 hover:text-slate-200 transition-colors">
-                {link.label}
-              </Link>
-            ))}
+          {/* Publication */}
+          <div>
+            <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "rgba(255,255,255,0.25)", marginBottom: 14 }}>
+              Publication
+            </div>
+            <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+              <button
+                onClick={() => goView("brief")}
+                style={{ fontSize: 13, color: "rgba(255,255,255,0.45)", background: "none", border: "none", cursor: "pointer", padding: 0, textAlign: "left", fontFamily: "var(--font-jakarta)", transition: "color 150ms ease" }}
+                onMouseEnter={(e) => (e.currentTarget.style.color = "rgba(255,255,255,0.9)")}
+                onMouseLeave={(e) => (e.currentTarget.style.color = "rgba(255,255,255,0.45)")}
+              >
+                The Brief
+              </button>
+              <button
+                onClick={() => goView("explore")}
+                style={{ fontSize: 13, color: "rgba(255,255,255,0.45)", background: "none", border: "none", cursor: "pointer", padding: 0, textAlign: "left", fontFamily: "var(--font-jakarta)", transition: "color 150ms ease" }}
+                onMouseEnter={(e) => (e.currentTarget.style.color = "rgba(255,255,255,0.9)")}
+                onMouseLeave={(e) => (e.currentTarget.style.color = "rgba(255,255,255,0.45)")}
+              >
+                Explore
+              </button>
+              <button
+                onClick={openEditModal}
+                style={{ fontSize: 13, color: "rgba(255,255,255,0.45)", background: "none", border: "none", cursor: "pointer", padding: 0, textAlign: "left", fontFamily: "var(--font-jakarta)", transition: "color 150ms ease" }}
+                onMouseEnter={(e) => (e.currentTarget.style.color = "rgba(255,255,255,0.9)")}
+                onMouseLeave={(e) => (e.currentTarget.style.color = "rgba(255,255,255,0.45)")}
+              >
+                Edit industries
+              </button>
+            </div>
           </div>
 
-          {/* Mini subscribe */}
-          <div className="space-y-4">
-            <p className="text-xs font-medium uppercase tracking-widest text-slate-500">Stay sharp</p>
-            <p className="text-sm text-slate-400">Get smarter about AI, one industry at a time.</p>
-            <Link
-              href="/#subscribe"
-              className="inline-block rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-500 transition-colors"
-            >
-              Subscribe free →
-            </Link>
+          {/* This issue */}
+          <div>
+            <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "rgba(255,255,255,0.25)", marginBottom: 14 }}>
+              This issue
+            </div>
+            <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+              {[`Issue #${ISSUE_NUM}`, ISSUE_DATE, "theinference.co"].map((item, i) => (
+                <span key={i} style={{ fontSize: 13, color: "rgba(255,255,255,0.45)", cursor: "default" }}>
+                  {item}
+                </span>
+              ))}
+            </div>
           </div>
         </div>
 
-        <div className="mt-12 border-t border-white/5 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p className="text-xs text-slate-500">
-            © {new Date().getFullYear()} The Inference. All rights reserved.
-          </p>
-          <div className="flex gap-6">
-            <a href="#" className="text-xs text-slate-500 hover:text-slate-400 transition-colors">Privacy</a>
-            <a href="#" className="text-xs text-slate-500 hover:text-slate-400 transition-colors">Unsubscribe</a>
-          </div>
+        {/* Bottom bar */}
+        <div
+          style={{
+            padding: "22px 0",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            fontSize: 12,
+            color: "rgba(255,255,255,0.28)",
+          }}
+        >
+          <span>© 2026 The Inference</span>
+          <span style={{ fontStyle: "italic" }}>Written for people inside the industries being rewritten.</span>
         </div>
       </div>
     </footer>

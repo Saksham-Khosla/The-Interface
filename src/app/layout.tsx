@@ -1,7 +1,16 @@
 import type { Metadata } from "next";
+import { Plus_Jakarta_Sans } from "next/font/google";
 import "@/styles/globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+
+const jakarta = Plus_Jakarta_Sans({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700", "800"],
+  style: ["normal", "italic"],
+  variable: "--font-jakarta",
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   title: {
@@ -51,10 +60,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className="scroll-smooth">
-      <body className="min-h-screen bg-[#040710] antialiased">
+    <html lang="en" className={`${jakarta.variable} scroll-smooth`}>
+      <body className="min-h-screen bg-bg text-ink antialiased">
         <Header />
-        <main className="pt-16">{children}</main>
+        <main className="pt-[50px]">{children}</main>
         <Footer />
       </body>
     </html>
