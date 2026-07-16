@@ -367,31 +367,30 @@ export function SecArtPanel({ industry }: { industry: Industry }) {
 
   /* ── Generic secondary panel (all other industries) ── */
   return (
-    <div style={{ position: "absolute", inset: 0, overflow: "hidden", background: "var(--accent-strong)" }}>
+    <div style={{
+      position: "absolute", inset: 0, overflow: "hidden",
+      background: "var(--accent-strong)",
+      padding: "20px 22px",
+      display: "flex", flexDirection: "column",
+    }}>
+      {/* Category label */}
       <div style={{
-        position: "absolute", bottom: -20, right: -10,
-        fontSize: 96, fontWeight: 800,
-        color: "var(--on-accent)", opacity: 0.07,
-        fontFamily: "var(--font-jakarta)", letterSpacing: "-0.06em", lineHeight: 1, userSelect: "none",
-      }}>
-        {industry.name.toUpperCase()}
-      </div>
-      <div style={{
-        position: "absolute", inset: 0,
-        backgroundImage: "repeating-linear-gradient(0deg, rgba(255,255,255,0.04) 0px, rgba(255,255,255,0.04) 1px, transparent 1px, transparent 32px)",
-      }} />
-      <div style={{
-        position: "absolute", top: 20, left: 20,
-        fontSize: 10, fontWeight: 700, letterSpacing: "0.1em",
-        textTransform: "uppercase", color: "var(--on-accent)", opacity: 0.5,
+        fontSize: 8, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase",
+        color: "var(--on-accent)", opacity: 0.35, flexShrink: 0,
       }}>
         {industry.name}
       </div>
-      <div style={{
-        position: "absolute", bottom: 20, left: 20,
-        fontSize: 11, color: "var(--on-accent)", opacity: 0.38,
-      }}>
-        {industry.readTime}
+
+      {/* Abstract editorial text stubs */}
+      <div style={{ flex: 1, display: "flex", flexDirection: "column", justifyContent: "flex-end", gap: 8 }}>
+        {[100, 88, 94, 72, 83].map((w, i) => (
+          <div key={i} style={{
+            height: 6, borderRadius: 2,
+            background: "var(--on-accent)",
+            opacity: i === 0 ? 0.2 : i === 2 ? 0.16 : 0.1,
+            width: `${w}%`,
+          }} />
+        ))}
       </div>
     </div>
   );
