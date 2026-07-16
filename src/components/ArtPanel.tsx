@@ -5,52 +5,70 @@ interface ArtPanelProps {
   className?: string;
 }
 
-/** Full editorial art panels (lead story) */
+/** Full editorial art panels (lead story) — all accent colours via CSS variables */
 export function ArtPanel({ id, className = "" }: ArtPanelProps) {
-  const style: React.CSSProperties = {
-    position: "absolute",
-    inset: 0,
-    overflow: "hidden",
-  };
-
   if (id === "finance") {
     return (
-      <div className={className} style={{ position: "absolute", inset: 0, background: "#0C0926", overflow: "hidden" }}>
+      <div className={className} style={{ position: "absolute", inset: 0, background: "#0C0F1A", overflow: "hidden" }}>
+        {/* Right accent panel — accent-strong block */}
+        <div style={{
+          position: "absolute", right: 0, top: 0, bottom: 0, width: "34%",
+          background: "var(--accent)",
+        }} />
+
+        {/* Chart SVG — left 66% */}
         <svg
-          style={{ position: "absolute", left: 0, right: 0, top: 0, bottom: 38, width: "100%", height: "calc(100% - 38px)" }}
-          viewBox="0 0 600 200"
+          style={{ position: "absolute", left: 0, top: 0, width: "66%", height: "calc(100% - 36px)" }}
+          viewBox="0 0 380 200"
           preserveAspectRatio="none"
         >
-          <line x1="0" y1="50" x2="600" y2="50" stroke="rgba(255,255,255,0.05)" strokeWidth="1" />
-          <line x1="0" y1="100" x2="600" y2="100" stroke="rgba(255,255,255,0.05)" strokeWidth="1" />
-          <line x1="0" y1="150" x2="600" y2="150" stroke="rgba(255,255,255,0.05)" strokeWidth="1" />
+          <line x1="0" y1="55" x2="380" y2="55" stroke="var(--accent-muted)" strokeWidth="0.6" strokeOpacity="0.22" />
+          <line x1="0" y1="110" x2="380" y2="110" stroke="var(--accent-muted)" strokeWidth="0.6" strokeOpacity="0.22" />
+          <line x1="0" y1="162" x2="380" y2="162" stroke="var(--accent-muted)" strokeWidth="0.6" strokeOpacity="0.22" />
           <polyline
-            points="0,175 70,148 130,157 200,100 280,118 360,60 440,74 520,36 600,18"
+            points="0,178 70,152 130,160 200,105 280,82 380,38 380,200 0,200"
+            fill="var(--accent)"
+            fillOpacity="0.14"
+            stroke="none"
+          />
+          <polyline
+            points="0,178 70,152 130,160 200,105 280,82 380,38"
             fill="none"
-            stroke="#EFFFA5"
+            stroke="var(--accent)"
             strokeWidth="2.5"
             strokeLinejoin="round"
             strokeLinecap="round"
           />
-          <polyline
-            points="0,175 70,148 130,157 200,100 280,118 360,60 440,74 520,36 600,18 600,200 0,200"
-            fill="rgba(239,255,165,0.05)"
-            stroke="none"
-          />
-          <circle cx="600" cy="18" r="5" fill="#EFFFA5" />
-          <circle cx="600" cy="18" r="14" fill="rgba(239,255,165,0.12)" />
+          <circle cx="380" cy="38" r="5" fill="var(--accent)" />
+          <circle cx="380" cy="38" r="14" fill="var(--accent)" fillOpacity="0.18" />
         </svg>
-        <div style={{ position: "absolute", top: 18, left: 20, fontSize: 10, fontWeight: 700, letterSpacing: "0.09em", textTransform: "uppercase", color: "rgba(255,255,255,0.28)" }}>
+
+        <div style={{ position: "absolute", top: 18, left: 20, fontSize: 9, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "rgba(255,255,255,0.22)" }}>
           AI Agent Activity — Q2 2026
         </div>
-        <div style={{ position: "absolute", top: 14, right: 20, fontSize: 20, fontWeight: 800, color: "#EFFFA5", fontFamily: "monospace", letterSpacing: "-0.02em" }}>
-          +18.4%
-        </div>
-        <div style={{ position: "absolute", right: 20, top: 52, display: "flex", flexDirection: "column", gap: 18, fontFamily: "monospace", fontSize: 9, color: "rgba(239,255,165,0.28)" }}>
-          <span>248</span><span>220</span><span>192</span>
-        </div>
-        <div style={{ position: "absolute", bottom: 12, left: 20, right: 20, display: "flex", justifyContent: "space-between", fontFamily: "monospace", fontSize: 9, color: "rgba(255,255,255,0.18)" }}>
+        <div style={{ position: "absolute", bottom: 10, left: 20, width: "60%", display: "flex", justifyContent: "space-between", fontFamily: "monospace", fontSize: 8, color: "rgba(255,255,255,0.16)" }}>
           <span>JAN</span><span>FEB</span><span>MAR</span><span>APR</span><span>MAY</span><span>JUN</span>
+        </div>
+
+        {/* Accent panel — metric */}
+        <div style={{
+          position: "absolute", right: 0, top: 0, bottom: 0, width: "34%",
+          display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center",
+          padding: "0 20px", textAlign: "center",
+        }}>
+          <div style={{ fontSize: 36, fontWeight: 800, letterSpacing: "-0.04em", lineHeight: 1, color: "var(--on-accent)", fontFamily: "var(--font-jakarta)", marginBottom: 8 }}>
+            +18.4%
+          </div>
+          <div style={{ fontSize: 8, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "var(--on-accent)", opacity: 0.48 }}>
+            YTD Return
+          </div>
+          <div style={{ width: 24, height: 1, background: "var(--on-accent)", opacity: 0.2, margin: "16px auto" }} />
+          <div style={{ fontSize: 14, fontWeight: 800, letterSpacing: "-0.02em", color: "var(--on-accent)", marginBottom: 4 }}>
+            $4.2T
+          </div>
+          <div style={{ fontSize: 8, fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", color: "var(--on-accent)", opacity: 0.38 }}>
+            AUM Tracked
+          </div>
         </div>
       </div>
     );
@@ -67,13 +85,13 @@ export function ArtPanel({ id, className = "" }: ArtPanelProps) {
         </div>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(5,1fr)", gap: 3 }}>
           {[
-            { bg: "#4165E8", label: "09:00" }, { bg: "#E8E4D8" }, { bg: "#4165E8", opacity: 0.5 }, { bg: "#E8E4D8" }, { bg: "#4165E8", label: "All day" },
-            { bg: "#E8E4D8" }, { bg: "#4165E8", opacity: 0.65 }, { bg: "#4165E8", label: "Copilot" }, { bg: "#4165E8", opacity: 0.45 }, { bg: "#E8E4D8" },
-            { bg: "#4165E8" }, { bg: "#4165E8", opacity: 0.8 }, { bg: "#E8E4D8" }, { bg: "#4165E8", opacity: 0.5 }, { bg: "#4165E8", label: "Review" },
-            { bg: "#E8E4D8" }, { bg: "#E8E4D8" }, { bg: "#4165E8", opacity: 0.35 }, { bg: "#4165E8" }, { bg: "#E8E4D8" },
+            { accent: true, label: "09:00" }, { accent: false }, { accent: true, op: 0.5 }, { accent: false }, { accent: true, label: "All day" },
+            { accent: false }, { accent: true, op: 0.65 }, { accent: true, label: "Copilot" }, { accent: true, op: 0.45 }, { accent: false },
+            { accent: true }, { accent: true, op: 0.8 }, { accent: false }, { accent: true, op: 0.5 }, { accent: true, label: "Review" },
+            { accent: false }, { accent: false }, { accent: true, op: 0.35 }, { accent: true }, { accent: false },
           ].map((cell, i) => (
-            <div key={i} style={{ height: 36, borderRadius: 4, background: cell.bg, opacity: cell.opacity ?? 1, position: "relative", overflow: "hidden" }}>
-              {cell.label && <div style={{ position: "absolute", bottom: 4, left: 5, fontSize: 7, color: "rgba(255,255,255,0.65)", fontWeight: 700 }}>{cell.label}</div>}
+            <div key={i} style={{ height: 36, borderRadius: 4, background: cell.accent ? "var(--accent)" : "#E8E4D8", opacity: cell.op ?? 1, position: "relative", overflow: "hidden" }}>
+              {cell.label && <div style={{ position: "absolute", bottom: 4, left: 5, fontSize: 7, color: "rgba(255,255,255,0.7)", fontWeight: 700 }}>{cell.label}</div>}
             </div>
           ))}
         </div>
@@ -98,11 +116,11 @@ export function ArtPanel({ id, className = "" }: ArtPanelProps) {
           ].map((row, i) => (
             <div key={i} style={{ display: "flex", gap: 12, alignItems: "center", margin: row.hi ? "2px 0" : 0 }}>
               <span style={{ fontFamily: "monospace", fontSize: 9, color: "rgba(255,255,255,0.15)", minWidth: 16 }}>{row.num}</span>
-              <div style={{ height: 7, borderRadius: 1, background: row.hi ? "rgba(255,255,255,0.75)" : "rgba(255,255,255,0.08)", width: row.w }} />
+              <div style={{ height: 7, borderRadius: 1, background: row.hi ? "var(--accent-soft)" : "rgba(255,255,255,0.08)", width: row.w }} />
             </div>
           ))}
         </div>
-        <div style={{ position: "absolute", bottom: 14, left: 28, fontSize: 10, color: "#C4A83C", fontWeight: 700, fontFamily: "monospace" }}>
+        <div style={{ position: "absolute", bottom: 14, left: 28, fontSize: 10, color: "var(--accent-muted)", fontWeight: 700, fontFamily: "monospace" }}>
           AI flagged 23 anomalies in §4
         </div>
         <div style={{ position: "absolute", bottom: 14, right: 28, fontFamily: "monospace", fontSize: 9, color: "rgba(255,255,255,0.15)" }}>
@@ -121,8 +139,8 @@ export function ArtPanel({ id, className = "" }: ArtPanelProps) {
         <div style={{ display: "flex", alignItems: "center", gap: 0, marginBottom: 24 }}>
           {[
             { bg: "#FBEEE8", border: "#CC8A7A", color: "#681808", lines: ["Scan", "in"] },
-            { bg: "#EFFFA5", border: "#6A7A00", color: "#3A4400", lines: ["Pre-", "annotate"] },
-            { bg: "#EEF1FB", border: "#4165E8", color: "#1E2C80", lines: ["Report", "out"] },
+            { bg: "#F5F2EB", border: "#CCC8BE", color: "#6C6962", lines: ["Pre-", "annotate"] },
+            { bg: "var(--accent-soft)", border: "var(--accent)", color: "var(--accent-strong)", lines: ["Report", "out"] },
           ].map((node, i) => (
             <>
               <div key={`node-${i}`} style={{ width: 48, height: 48, borderRadius: "50%", background: node.bg, border: `2px solid ${node.border}`, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 8, fontWeight: 700, color: node.color, textAlign: "center", lineHeight: 1.2, flexShrink: 0 }}>
@@ -150,7 +168,7 @@ export function ArtPanel({ id, className = "" }: ArtPanelProps) {
             <div key={i} style={{ display: "grid", gridTemplateColumns: "2fr 1fr 1fr", padding: "8px 10px", fontSize: 10, color: "#11110F", gap: 8, borderTop: "1px solid #E2DDD6" }}>
               <div style={{ color: i === 2 ? "#9C978F" : "#11110F" }}>{row.finding}</div>
               <div style={{ color: row.priColor, fontWeight: 700 }}>{row.priority}</div>
-              <div style={{ color: i === 2 ? "#9C978F" : "#3C4800", fontWeight: i === 2 ? 400 : 700 }}>{row.saved}</div>
+              <div style={{ color: i === 2 ? "#9C978F" : "var(--accent-strong)", fontWeight: i === 2 ? 400 : 700 }}>{row.saved}</div>
             </div>
           ))}
         </div>
@@ -170,16 +188,16 @@ export function ArtPanel({ id, className = "" }: ArtPanelProps) {
             { num: "03", w: "75%", hi: false }, { num: "04", w: "60%", hi: false },
             { num: "05", w: "82%", hi: true }, { num: "06", w: "55%", hi: false }, { num: "07", w: "79%", hi: false },
           ].map((row, i) => (
-            <div key={i} style={{ display: "flex", gap: 10, alignItems: "center", background: row.hi ? "#EFFFA5" : "transparent", borderRadius: row.hi ? 3 : 0, padding: row.hi ? "3px 2px" : 0, margin: row.hi ? "0 -2px" : 0 }}>
-              <span style={{ fontFamily: "monospace", fontSize: 8, color: row.hi ? "#6A7A00" : "#CBC5B9", minWidth: 14 }}>{row.num}</span>
-              <div style={{ height: 8, background: row.hi ? "#8AA000" : "#E2DDD6", borderRadius: 1, width: row.w, opacity: row.hi ? 0.6 : 1 }} />
-              {row.label && <span style={{ marginLeft: "auto", fontSize: 9, color: "#3A4800", fontWeight: 800, whiteSpace: "nowrap" }}>{row.label}</span>}
+            <div key={i} style={{ display: "flex", gap: 10, alignItems: "center", background: row.hi ? "var(--accent-soft)" : "transparent", borderRadius: row.hi ? 3 : 0, padding: row.hi ? "3px 2px" : 0, margin: row.hi ? "0 -2px" : 0 }}>
+              <span style={{ fontFamily: "monospace", fontSize: 8, color: row.hi ? "var(--accent)" : "#CBC5B9", minWidth: 14 }}>{row.num}</span>
+              <div style={{ height: 8, background: row.hi ? "var(--accent)" : "#E2DDD6", borderRadius: 1, width: row.w, opacity: row.hi ? 0.65 : 1 }} />
+              {row.label && <span style={{ marginLeft: "auto", fontSize: 9, color: "var(--accent-strong)", fontWeight: 800, whiteSpace: "nowrap" }}>{row.label}</span>}
             </div>
           ))}
         </div>
         <div style={{ marginTop: 16, paddingTop: 12, borderTop: "1px solid #E2DDD6", display: "flex", gap: 16 }}>
           <div style={{ display: "flex", alignItems: "center", gap: 5 }}>
-            <div style={{ width: 10, height: 10, borderRadius: 2, background: "#EFFFA5", border: "1px solid #8AA000" }} />
+            <div style={{ width: 10, height: 10, borderRadius: 2, background: "var(--accent-soft)", border: "1px solid var(--accent)" }} />
             <span style={{ fontSize: 9, color: "#68655F" }}>AI-tutored group</span>
           </div>
           <div style={{ display: "flex", alignItems: "center", gap: 5 }}>
@@ -193,8 +211,8 @@ export function ArtPanel({ id, className = "" }: ArtPanelProps) {
 
   if (id === "startups") {
     return (
-      <div className={className} style={{ position: "absolute", inset: 0, background: "#FBF0D8", overflow: "hidden", padding: "24px 28px" }}>
-        <div style={{ fontSize: 9, fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", color: "#9C7000", marginBottom: 14 }}>
+      <div className={className} style={{ position: "absolute", inset: 0, background: "var(--accent-faint)", overflow: "hidden", padding: "24px 28px" }}>
+        <div style={{ fontSize: 9, fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", color: "var(--accent-muted)", marginBottom: 14 }}>
           Vertical AI Funding Rounds — 2024–2026
         </div>
         <div style={{ position: "relative", height: "calc(100% - 80px)", display: "flex", flexDirection: "column", justifyContent: "flex-end" }}>
@@ -206,14 +224,14 @@ export function ArtPanel({ id, className = "" }: ArtPanelProps) {
               { label: "$300m", stage: "Series C", h: "100%", opacity: 1 },
             ].map((bar, i) => (
               <div key={i} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 5, flex: 1 }}>
-                <div style={{ fontFamily: "monospace", fontSize: 9, color: "#C89040", fontWeight: 700 }}>{bar.label}</div>
-                <div style={{ width: "100%", borderRadius: "4px 4px 0 0", background: "#C89040", opacity: bar.opacity, height: bar.h }} />
-                <div style={{ fontSize: 8, fontWeight: 700, color: "#9C7000" }}>{bar.stage}</div>
+                <div style={{ fontFamily: "monospace", fontSize: 9, color: "var(--accent)", fontWeight: 700 }}>{bar.label}</div>
+                <div style={{ width: "100%", borderRadius: "4px 4px 0 0", background: "var(--accent)", opacity: bar.opacity, height: bar.h }} />
+                <div style={{ fontSize: 8, fontWeight: 700, color: "var(--accent-strong)" }}>{bar.stage}</div>
               </div>
             ))}
           </div>
         </div>
-        <div style={{ marginTop: 10, fontSize: 10, color: "#9C7000" }}>
+        <div style={{ marginTop: 10, fontSize: 10, color: "var(--accent-strong)" }}>
           Harvey, Inc. — 18 months from Seed to unicorn
         </div>
       </div>
@@ -227,20 +245,21 @@ export function ArtPanel({ id, className = "" }: ArtPanelProps) {
           Sora Generation — EFF Film Festival Entry
         </div>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: 3, marginBottom: 3 }}>
-          {[0.04, 0.12, 0.07, 0.18, 0.15, 0.05, "media", 0.09, 0.06, "media2", 0.14, 0.03].map((val, i) => (
+          {[0.04, 0.12, 0.07, 0.18, 0.15, 0.05, "hi", 0.09, 0.06, "mid", 0.14, 0.03].map((val, i) => (
             <div key={i} style={{
               aspectRatio: "16/9",
               borderRadius: 2,
-              background: val === "media" ? "rgba(184,104,152,0.6)" : val === "media2" ? "rgba(184,104,152,0.4)" : `rgba(255,255,255,${val})`,
+              background: (val === "hi" || val === "mid") ? "var(--accent)" : `rgba(255,255,255,${val})`,
+              opacity: val === "hi" ? 0.62 : val === "mid" ? 0.4 : 1,
             }} />
           ))}
         </div>
-        <div style={{ marginTop: 10, background: "rgba(255,255,255,0.05)", borderRadius: 3, height: 4, position: "relative", overflow: "hidden" }}>
-          <div style={{ position: "absolute", left: 0, top: 0, bottom: 0, width: "62%", background: "rgba(184,104,152,0.7)", borderRadius: 3 }} />
+        <div style={{ marginTop: 10, background: "rgba(255,255,255,0.06)", borderRadius: 3, height: 4, position: "relative", overflow: "hidden" }}>
+          <div style={{ position: "absolute", left: 0, top: 0, bottom: 0, width: "62%", background: "var(--accent)", opacity: 0.72, borderRadius: 3 }} />
         </div>
         <div style={{ marginTop: 8, display: "flex", justifyContent: "space-between", fontFamily: "monospace", fontSize: 8, color: "rgba(255,255,255,0.2)" }}>
           <span>00:00</span>
-          <span style={{ color: "rgba(184,104,152,0.8)" }}>01:28 / 02:20</span>
+          <span style={{ color: "var(--accent-muted)", opacity: 0.85 }}>01:28 / 02:20</span>
           <span>HD</span>
         </div>
       </div>
@@ -250,21 +269,128 @@ export function ArtPanel({ id, className = "" }: ArtPanelProps) {
   return <div className={className} style={{ position: "absolute", inset: 0, background: "#E0DBD2" }} />;
 }
 
-/** Secondary story art: bold colour block with ghost text */
+/** Secondary story art: accent-strong block with on-accent typography */
 export function SecArtPanel({ industry }: { industry: Industry }) {
-  return (
-    <div style={{ position: "absolute", inset: 0, overflow: "hidden", background: industry.block }}>
+  /* ── Education — bespoke learning-pathway visual ── */
+  if (industry.slug === "education") {
+    return (
       <div style={{
-        position: "absolute", bottom: -24, right: -12,
-        fontSize: 100, fontWeight: 800, color: "rgba(0,0,0,0.07)",
+        position: "absolute", inset: 0, overflow: "hidden",
+        background: "var(--accent-faint)",
+        padding: "18px 20px 16px",
+        display: "flex", flexDirection: "column",
+      }}>
+        {/* Top label */}
+        <div style={{
+          fontSize: 8, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase",
+          color: "var(--accent-muted)", marginBottom: 14, fontFamily: "monospace", flexShrink: 0,
+        }}>
+          Personalised Learning Path
+        </div>
+
+        {/* Pathway area — grows to fill remaining height */}
+        <div style={{ flex: 1, display: "flex", flexDirection: "column", justifyContent: "center" }}>
+          {/* Three blocks + connectors */}
+          <div style={{ display: "flex", alignItems: "center", gap: 0, marginBottom: 8 }}>
+            {/* Block 1 — current level */}
+            <div style={{
+              flex: 1, background: "var(--surface)", border: "1.5px solid var(--rule)",
+              borderRadius: 7, padding: "10px 11px 9px",
+            }}>
+              <div style={{ fontSize: 7, fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", color: "#9C978F", marginBottom: 4 }}>
+                Module 1
+              </div>
+              <div style={{ fontSize: 11, fontWeight: 800, color: "var(--ink)", lineHeight: 1.3, letterSpacing: "-0.01em" }}>
+                Algebra<br />Basics
+              </div>
+            </div>
+
+            {/* Connector */}
+            <div style={{ width: 22, height: 1.5, background: "var(--accent-soft)", flexShrink: 0 }} />
+
+            {/* Block 2 — AI recommendation */}
+            <div style={{ flex: 1.15, background: "var(--accent)", borderRadius: 7, padding: "10px 11px 9px" }}>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 4 }}>
+                <div style={{ fontSize: 7, fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", color: "rgba(255,255,255,0.55)" }}>
+                  Module 2
+                </div>
+                <div style={{
+                  fontSize: 6.5, fontWeight: 700, letterSpacing: "0.06em", textTransform: "uppercase",
+                  color: "var(--on-accent)", background: "var(--accent-strong)", borderRadius: 2, padding: "1px 4px",
+                }}>
+                  AI
+                </div>
+              </div>
+              <div style={{ fontSize: 11, fontWeight: 800, color: "var(--on-accent)", lineHeight: 1.3, letterSpacing: "-0.01em" }}>
+                Linear<br />Equations
+              </div>
+            </div>
+
+            {/* Connector (dimmed — path not yet open) */}
+            <div style={{ width: 22, height: 1.5, background: "var(--accent-soft)", opacity: 0.35, flexShrink: 0 }} />
+
+            {/* Block 3 — next lesson (locked) */}
+            <div style={{
+              flex: 1, background: "var(--surface)", border: "1.5px solid var(--rule)",
+              borderRadius: 7, padding: "10px 11px 9px", opacity: 0.42,
+            }}>
+              <div style={{ fontSize: 7, fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", color: "#9C978F", marginBottom: 4 }}>
+                Module 3
+              </div>
+              <div style={{ fontSize: 11, fontWeight: 800, color: "var(--ink)", lineHeight: 1.3, letterSpacing: "-0.01em" }}>
+                Quadratic<br />Functions
+              </div>
+            </div>
+          </div>
+
+          {/* Annotation row — mirrors block widths */}
+          <div style={{ display: "flex", alignItems: "flex-start", gap: 0 }}>
+            <div style={{ flex: 1, fontSize: 8, color: "#9C978F", textAlign: "center" }}>Current level</div>
+            <div style={{ width: 22, flexShrink: 0 }} />
+            <div style={{ flex: 1.15, fontSize: 8, color: "var(--accent)", fontWeight: 700, textAlign: "center" }}>AI recommendation</div>
+            <div style={{ width: 22, flexShrink: 0 }} />
+            <div style={{ flex: 1, fontSize: 8, color: "#9C978F", textAlign: "center", opacity: 0.42 }}>Next lesson</div>
+          </div>
+        </div>
+
+        {/* Metric strip */}
+        <div style={{
+          marginTop: 12, paddingTop: 10, borderTop: "1px solid var(--accent-soft)",
+          fontSize: 10, fontWeight: 700, color: "var(--accent-strong)",
+          letterSpacing: "-0.01em", flexShrink: 0,
+        }}>
+          +24% retention · AI-tutored cohort
+        </div>
+      </div>
+    );
+  }
+
+  /* ── Generic secondary panel (all other industries) ── */
+  return (
+    <div style={{ position: "absolute", inset: 0, overflow: "hidden", background: "var(--accent-strong)" }}>
+      <div style={{
+        position: "absolute", bottom: -20, right: -10,
+        fontSize: 96, fontWeight: 800,
+        color: "var(--on-accent)", opacity: 0.07,
         fontFamily: "var(--font-jakarta)", letterSpacing: "-0.06em", lineHeight: 1, userSelect: "none",
+      }}>
+        {industry.name.toUpperCase()}
+      </div>
+      <div style={{
+        position: "absolute", inset: 0,
+        backgroundImage: "repeating-linear-gradient(0deg, rgba(255,255,255,0.04) 0px, rgba(255,255,255,0.04) 1px, transparent 1px, transparent 32px)",
+      }} />
+      <div style={{
+        position: "absolute", top: 20, left: 20,
+        fontSize: 10, fontWeight: 700, letterSpacing: "0.1em",
+        textTransform: "uppercase", color: "var(--on-accent)", opacity: 0.5,
       }}>
         {industry.name}
       </div>
-      <div style={{ position: "absolute", top: 20, left: 20, fontSize: 11, fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", color: "rgba(255,255,255,0.5)" }}>
-        {industry.name}
-      </div>
-      <div style={{ position: "absolute", bottom: 20, left: 20, fontSize: 11, color: "rgba(255,255,255,0.4)" }}>
+      <div style={{
+        position: "absolute", bottom: 20, left: 20,
+        fontSize: 11, color: "var(--on-accent)", opacity: 0.38,
+      }}>
         {industry.readTime}
       </div>
     </div>

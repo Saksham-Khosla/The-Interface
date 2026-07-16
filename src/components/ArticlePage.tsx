@@ -87,7 +87,7 @@ export default function ArticlePage({
           </button>
 
           <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 16 }}>
-            <div style={{ height: 3, width: 22, borderRadius: 2, background: industry.accent }} />
+            <div style={{ height: 3, width: 22, borderRadius: 2, background: "var(--accent)" }} />
             <span style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: industry.titleClr, opacity: 0.7 }}>
               {industry.name}
             </span>
@@ -143,7 +143,7 @@ export default function ArticlePage({
               cursor: "pointer", fontFamily: "var(--font-jakarta)", padding: 0,
               transition: "color 150ms ease",
             }}
-            onMouseEnter={(e) => (e.currentTarget.style.color = "var(--ink)")}
+            onMouseEnter={(e) => (e.currentTarget.style.color = "var(--accent)")}
             onMouseLeave={(e) => (e.currentTarget.style.color = "var(--ink-3)")}
           >
             {comments.length === 0 ? "Leave a comment" : `${comments.length} comment${comments.length !== 1 ? "s" : ""}`} ↓
@@ -206,14 +206,14 @@ export default function ArticlePage({
               padding: "0 14px", fontFamily: "var(--font-jakarta)", fontSize: 14, color: "var(--ink)",
               background: "var(--surface)", outline: "none",
             }}
-            onFocus={(e) => (e.currentTarget.style.borderColor = "var(--ink)")}
+            onFocus={(e) => (e.currentTarget.style.borderColor = "var(--accent)")}
             onBlur={(e) => (e.currentTarget.style.borderColor = "var(--rule)")}
           />
           <button
             onClick={postComment}
             disabled={!draft.trim()}
             style={{
-              height: 44, padding: "0 18px", background: "var(--ink)", color: "#fff",
+              height: 44, padding: "0 18px", background: "var(--accent)", color: "#fff",
               border: "none", borderRadius: 8, fontFamily: "var(--font-jakarta)", fontSize: 13,
               fontWeight: 700, cursor: draft.trim() ? "pointer" : "not-allowed",
               opacity: draft.trim() ? 1 : 0.3, transition: "opacity 150ms ease",

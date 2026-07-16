@@ -10,7 +10,7 @@ export default function ExplorePage({ onOpenArticle }: ExplorePageProps) {
   return (
     <div>
       {/* Page header */}
-      <div style={{ borderBottom: "1px solid var(--ink)", padding: "52px 0 48px" }}>
+      <div style={{ borderBottom: "1px solid var(--ink)", borderTop: "4px solid var(--accent)", padding: "52px 0 48px" }}>
         <div style={{ maxWidth: "var(--w)", margin: "0 auto", padding: "0 var(--pad)" }}>
           <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "var(--ink-3)", marginBottom: 14 }}>
             All industries
@@ -24,12 +24,11 @@ export default function ExplorePage({ onOpenArticle }: ExplorePageProps) {
       {/* Panels grid */}
       <div style={{ maxWidth: "var(--w)", margin: "0 auto", padding: "0 var(--pad)", borderBottom: "1px solid var(--rule)" }}>
         <div style={{ borderLeft: "1px solid var(--rule)", borderTop: "1px solid var(--rule)" }}>
-          {/* Rows of 2 */}
           {Array.from({ length: Math.ceil(industries.length / 2) }).map((_, rowIdx) => {
             const pair = industries.slice(rowIdx * 2, rowIdx * 2 + 2);
             return (
               <div key={rowIdx} style={{ display: "grid", gridTemplateColumns: "1fr 1fr" }}>
-                {pair.map((ind, colIdx) => (
+                {pair.map((ind) => (
                   <div
                     key={ind.slug}
                     role="article"
@@ -45,14 +44,14 @@ export default function ExplorePage({ onOpenArticle }: ExplorePageProps) {
                       display: "flex",
                       flexDirection: "column",
                     }}
-                    onMouseEnter={(e) => (e.currentTarget.style.background = "var(--blush)")}
+                    onMouseEnter={(e) => (e.currentTarget.style.background = "var(--accent-soft)")}
                     onMouseLeave={(e) => (e.currentTarget.style.background = "transparent")}
                   >
                     <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", marginBottom: 10 }}>
                       <h2 style={{ fontSize: 22, fontWeight: 800, letterSpacing: "-0.03em", color: "var(--ink)" }}>
                         {ind.name}
                       </h2>
-                      <span style={{ fontSize: 18, color: "var(--ink-3)", transition: "transform 0.15s", display: "inline-block" }}>→</span>
+                      <span style={{ fontSize: 18, color: "var(--accent)", opacity: 0.7, transition: "transform 0.15s, opacity 0.15s", display: "inline-block" }}>→</span>
                     </div>
                     <p style={{ fontSize: 14, lineHeight: 1.62, color: "var(--ink-2)", marginBottom: 20, flex: 1 }}>
                       {ind.description}
@@ -62,7 +61,6 @@ export default function ExplorePage({ onOpenArticle }: ExplorePageProps) {
                     </div>
                   </div>
                 ))}
-                {/* Fill odd last row */}
                 {pair.length === 1 && (
                   <div style={{ borderRight: "1px solid var(--rule)", borderBottom: "1px solid var(--rule)" }} />
                 )}

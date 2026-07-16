@@ -47,8 +47,9 @@ export default function BriefPage({
       {/* Page header */}
       <div style={{ borderBottom: "1px solid var(--ink)", padding: "52px 0 48px" }}>
         <div style={{ maxWidth: "var(--w)", margin: "0 auto", padding: "0 var(--pad)" }}>
-          <div className="page-hd-2col" style={{ display: "grid", gridTemplateColumns: "1fr 320px", gap: 80, alignItems: "end" }}>
+          <div className="ti-hd-grid">
             <div>
+              <div style={{ width: 28, height: 3, background: "var(--accent)", borderRadius: 2, marginBottom: 14 }} />
               <p className="eyebrow" style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "var(--ink-3)", marginBottom: 14, display: "flex", alignItems: "center", gap: 10 }}>
                 Your Brief <span style={{ color: "var(--rule-lt)" }}>/</span> Issue #{ISSUE_NUM}
               </p>
@@ -71,26 +72,16 @@ export default function BriefPage({
 
       {/* Primary stories */}
       <div style={{ maxWidth: "var(--w)", margin: "0 auto", padding: "0 var(--pad)" }}>
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: secondary ? "5fr 3fr" : "1fr",
-            borderBottom: "1px solid var(--rule)",
-          }}
-        >
+        <div className={`ti-stories-grid${secondary ? " has-secondary" : ""}`}>
           {/* Lead story */}
           <div
             role="article"
             tabIndex={0}
+            className={`ti-lead${secondary ? " has-secondary" : ""}`}
             onClick={() => onOpenArticle(lead.slug, "brief")}
             onKeyDown={(e) => { if (e.key === "Enter") onOpenArticle(lead.slug, "brief"); }}
-            style={{
-              padding: "40px 48px 40px 0",
-              borderRight: secondary ? "1px solid var(--rule)" : "none",
-              cursor: "pointer",
-            }}
           >
-            <div style={{ borderRadius: 16, overflow: "hidden", marginBottom: 28, height: secondary ? 300 : 380, position: "relative" }}>
+            <div className={`ti-lead-art${secondary ? " has-secondary" : ""}`}>
               <ArtPanel id={lead.slug} />
             </div>
             <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 12 }}>
@@ -104,7 +95,7 @@ export default function BriefPage({
             <p style={{ fontSize: 16, lineHeight: 1.65, color: "var(--ink-2)", marginBottom: 20 }}>
               {lead.excerpt}
             </p>
-            <span style={{ fontSize: 13, fontWeight: 700, color: "var(--ink)", display: "inline-flex", alignItems: "center", gap: 6, letterSpacing: "-0.01em" }}>
+            <span style={{ fontSize: 13, fontWeight: 700, color: "var(--accent)", display: "inline-flex", alignItems: "center", gap: 6, letterSpacing: "-0.01em" }}>
               Read story <span style={{ display: "inline-block", transition: "transform 0.15s" }}>→</span>
             </span>
           </div>
@@ -116,9 +107,9 @@ export default function BriefPage({
               tabIndex={0}
               onClick={() => onOpenArticle(secondary.slug, "brief")}
               onKeyDown={(e) => { if (e.key === "Enter") onOpenArticle(secondary.slug, "brief"); }}
-              style={{ padding: "40px 0 40px 48px", cursor: "pointer", display: "flex", flexDirection: "column" }}
+              className="ti-secondary"
             >
-              <div style={{ borderRadius: 14, overflow: "hidden", marginBottom: 22, height: 220, position: "relative", flexShrink: 0 }}>
+              <div className="ti-secondary-art">
                 <SecArtPanel industry={secondary} />
               </div>
               <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 12 }}>
@@ -132,7 +123,7 @@ export default function BriefPage({
               <p style={{ fontSize: 13.5, lineHeight: 1.6, color: "var(--ink-2)", marginBottom: 14, flex: 1 }}>
                 {secondary.excerpt}
               </p>
-              <span style={{ fontSize: 13, fontWeight: 700, color: "var(--ink)", display: "inline-flex", alignItems: "center", gap: 6 }}>
+              <span style={{ fontSize: 13, fontWeight: 700, color: "var(--accent)", display: "inline-flex", alignItems: "center", gap: 6 }}>
                 Read story →
               </span>
             </div>
@@ -176,7 +167,7 @@ export default function BriefPage({
                       {ind.excerpt}
                     </div>
                   </div>
-                  <span style={{ color: "var(--ink-3)" }}>→</span>
+                  <span style={{ color: "var(--accent)", opacity: 0.7 }}>→</span>
                 </div>
               ))}
             </div>
@@ -185,22 +176,16 @@ export default function BriefPage({
       </div>
 
       {/* In Brief */}
-      <div style={{ padding: "44px 0", borderBottom: "1px solid var(--rule)" }}>
+      <div style={{ padding: "44px 0", borderBottom: "1px solid var(--rule)", background: "var(--accent-faint)" }}>
         <div style={{ maxWidth: "var(--w)", margin: "0 auto", padding: "0 var(--pad)" }}>
           <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "var(--ink-3)", marginBottom: 24 }}>
             In Brief
           </p>
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", borderTop: "1px solid var(--rule-lt)" }}>
+          <div className="ti-inbrief-grid">
             {quickTakes.map((take, i) => (
               <div
                 key={i}
-                style={{
-                  padding: "20px 36px 20px 0",
-                  borderBottom: "1px solid var(--rule-lt)",
-                  borderRight: i % 2 === 0 ? "1px solid var(--rule-lt)" : "none",
-                  paddingLeft: i % 2 === 1 ? 36 : 0,
-                  paddingRight: i % 2 === 1 ? 0 : 36,
-                }}
+                className={`ti-inbrief-item ${i % 2 === 0 ? "odd" : "even"}`}
               >
                 <p style={{ fontSize: 10, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "var(--ink-3)", marginBottom: 6 }}>
                   {take.tag}
@@ -218,17 +203,17 @@ export default function BriefPage({
       </div>
 
       {/* Subscription strip */}
-      <div style={{ background: "var(--lime)", borderTop: "1px solid var(--ink)", borderBottom: "1px solid var(--ink)" }}>
-        <div style={{ maxWidth: "var(--w)", margin: "0 auto", padding: "52px var(--pad)", display: "grid", gridTemplateColumns: "1fr 1fr", gap: 80, alignItems: "center" }}>
-          <h2 style={{ fontSize: "clamp(24px,2.6vw,36px)", fontWeight: 800, letterSpacing: "-0.035em", lineHeight: 1.1, color: "var(--ink)" }}>
+      <div style={{ background: "var(--accent-strong)", borderTop: "1px solid rgba(0,0,0,0.15)" }}>
+        <div className="ti-subscribe-grid" style={{ maxWidth: "var(--w)", margin: "0 auto", padding: "52px var(--pad)" }}>
+          <h2 style={{ fontSize: "clamp(24px,2.6vw,36px)", fontWeight: 800, letterSpacing: "-0.035em", lineHeight: 1.1, color: "var(--on-accent)" }}>
             Share The Inference<br />with a colleague.
           </h2>
           <div>
-            <p style={{ fontSize: 15, lineHeight: 1.65, color: "var(--ink-2)", marginBottom: 20 }}>
+            <p style={{ fontSize: 15, lineHeight: 1.65, color: "var(--on-accent)", opacity: 0.65, marginBottom: 20 }}>
               Know someone inside the industries being rewritten? One link is all it takes.
             </p>
             {subDone ? (
-              <p style={{ fontSize: 14, color: "var(--ink-2)", fontWeight: 600 }}>✓ Thanks — they'll get an invite shortly.</p>
+              <p style={{ fontSize: 14, color: "var(--on-accent)", fontWeight: 600, opacity: 0.8 }}>✓ Thanks — they&apos;ll get an invite shortly.</p>
             ) : (
               <form onSubmit={handleSubSubmit} style={{ display: "flex", gap: 8 }}>
                 <input
@@ -237,15 +222,15 @@ export default function BriefPage({
                   onChange={(e) => setSubEmail(e.target.value)}
                   placeholder="colleague@example.com"
                   style={{
-                    flex: 1, height: 44, border: "1px solid rgba(17,17,15,0.35)", borderRadius: 7,
+                    flex: 1, height: 44, border: "1px solid rgba(255,255,255,0.25)", borderRadius: 7,
                     padding: "0 16px", fontFamily: "var(--font-jakarta)", fontSize: 14, color: "var(--ink)",
-                    background: "rgba(255,255,255,0.55)", outline: "none",
+                    background: "rgba(255,255,255,0.92)", outline: "none",
                   }}
                 />
                 <button
                   type="submit"
                   style={{
-                    height: 44, padding: "0 20px", background: "var(--ink)", color: "#fff",
+                    height: 44, padding: "0 20px", background: "var(--on-accent)", color: "var(--accent-strong)",
                     border: "none", borderRadius: 7, fontFamily: "var(--font-jakarta)", fontSize: 13,
                     fontWeight: 700, cursor: "pointer", letterSpacing: "-0.01em", whiteSpace: "nowrap",
                   }}
@@ -254,7 +239,7 @@ export default function BriefPage({
                 </button>
               </form>
             )}
-            <p style={{ fontSize: 12, color: "var(--ink-3)", marginTop: 10 }}>Free forever. No spam, ever.</p>
+            <p style={{ fontSize: 12, color: "var(--on-accent)", opacity: 0.4, marginTop: 10 }}>Free forever. No spam, ever.</p>
           </div>
         </div>
       </div>

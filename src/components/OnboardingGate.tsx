@@ -139,7 +139,7 @@ function IndustriesScreen({
     >
       <div style={{ width: "100%", maxWidth: 620, opacity: 0, animation: "fadeUp 0.38s ease 0.06s forwards" }}>
         <div style={{ display: "flex", gap: 5, marginBottom: 28 }} role="progressbar" aria-valuenow={1} aria-valuemax={2}>
-          <div style={{ height: 2, flex: 1, background: "var(--ink)", borderRadius: 2 }} />
+          <div style={{ height: 2, flex: 1, background: "var(--accent)", borderRadius: 2 }} />
           <div style={{ height: 2, flex: 1, background: "var(--rule-lt)", borderRadius: 2 }} />
         </div>
         <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "var(--ink-3)", marginBottom: 18 }}>
@@ -171,8 +171,8 @@ function IndustriesScreen({
                 onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); onToggle(ind.slug); } }}
                 style={{
                   borderRadius: 10, padding: "15px 14px 14px", cursor: "pointer",
-                  background: sel ? "var(--ink)" : "var(--surface)",
-                  border: `1.5px solid ${sel ? "var(--ink)" : "var(--rule)"}`,
+                  background: sel ? "var(--accent-soft)" : "var(--surface)",
+                  border: `1.5px solid ${sel ? "var(--accent)" : "var(--rule)"}`,
                   transition: "border-color 150ms ease, background 150ms ease",
                   display: "flex", flexDirection: "column", minHeight: 100,
                   opacity: 0,
@@ -181,26 +181,26 @@ function IndustriesScreen({
                 }}
               >
                 <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", marginBottom: 9 }}>
-                  <span style={{ fontSize: 10, fontWeight: 700, letterSpacing: "0.07em", color: sel ? "rgba(255,255,255,0.38)" : "var(--ink-3)", lineHeight: 1 }}>
+                  <span style={{ fontSize: 10, fontWeight: 700, letterSpacing: "0.07em", color: sel ? "var(--accent)" : "var(--ink-3)", lineHeight: 1 }}>
                     {num}
                   </span>
                   <div style={{
                     width: 15, height: 15, borderRadius: "50%", flexShrink: 0,
-                    border: `1.5px solid ${sel ? "rgba(255,255,255,0.42)" : "var(--rule)"}`,
-                    background: sel ? "rgba(255,255,255,0.14)" : "none",
+                    border: `1.5px solid ${sel ? "var(--accent)" : "var(--rule)"}`,
+                    background: sel ? "var(--accent)" : "none",
                     display: "flex", alignItems: "center", justifyContent: "center",
                   }} aria-hidden="true">
                     {sel && (
                       <svg width="9" height="7" viewBox="0 0 9 7" fill="none">
-                        <path d="M1 3.5L3 5.5L8 1" stroke="white" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" />
+                        <path d="M1 3.5L3 5.5L8 1" stroke="var(--on-accent)" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" />
                       </svg>
                     )}
                   </div>
                 </div>
-                <div style={{ fontSize: 13, fontWeight: 700, letterSpacing: "-0.01em", color: sel ? "#fff" : "var(--ink)", marginBottom: 5 }}>
+                <div style={{ fontSize: 13, fontWeight: 700, letterSpacing: "-0.01em", color: sel ? "var(--accent-strong)" : "var(--ink)", marginBottom: 5 }}>
                   {ind.name}
                 </div>
-                <div style={{ fontSize: 11, lineHeight: 1.45, color: sel ? "rgba(255,255,255,0.36)" : "var(--ink-3)", marginTop: "auto", paddingTop: 5 }}>
+                <div style={{ fontSize: 11, lineHeight: 1.45, color: sel ? "var(--accent-muted)" : "var(--ink-3)", marginTop: "auto", paddingTop: 5 }}>
                   {ind.shortDesc}
                 </div>
               </div>
@@ -271,8 +271,8 @@ function EmailScreen({
     <div style={{ minHeight: "calc(100vh - 50px)", display: "flex", alignItems: "center", justifyContent: "center", padding: "60px 24px", background: "var(--bg)" }}>
       <div style={{ width: "100%", maxWidth: 540, opacity: 0, animation: "fadeUp 0.38s ease 0.06s forwards" }}>
         <div style={{ display: "flex", gap: 5, marginBottom: 28 }} role="progressbar" aria-valuenow={2} aria-valuemax={2}>
-          <div style={{ height: 2, flex: 1, background: "var(--ink)", borderRadius: 2 }} />
-          <div style={{ height: 2, flex: 1, background: "var(--ink)", borderRadius: 2 }} />
+          <div style={{ height: 2, flex: 1, background: "var(--accent)", borderRadius: 2 }} />
+          <div style={{ height: 2, flex: 1, background: "var(--accent)", borderRadius: 2 }} />
         </div>
         <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "var(--ink-3)", marginBottom: 18 }}>
           Step 2 of 2
@@ -300,7 +300,7 @@ function EmailScreen({
                 padding: "0 16px", fontFamily: "var(--font-jakarta)", fontSize: 15, color: "var(--ink)",
                 background: "var(--surface)", outline: "none", transition: "border-color 0.15s",
               }}
-              onFocus={(e) => (e.currentTarget.style.borderColor = "var(--ink)")}
+              onFocus={(e) => (e.currentTarget.style.borderColor = "var(--accent)")}
               onBlur={(e) => (e.currentTarget.style.borderColor = "var(--rule)")}
             />
             <button
@@ -308,7 +308,7 @@ function EmailScreen({
               disabled={loading}
               style={{
                 display: "inline-flex", alignItems: "center", gap: 7,
-                height: 46, padding: "0 22px", background: "var(--ink)", color: "#fff",
+                height: 46, padding: "0 22px", background: "var(--accent)", color: "#fff",
                 border: "none", borderRadius: 8, fontFamily: "var(--font-jakarta)", fontSize: 14,
                 fontWeight: 700, cursor: loading ? "not-allowed" : "pointer",
                 opacity: loading ? 0.6 : 1,
@@ -359,7 +359,7 @@ function SuccessScreen({ email, selectedIds, onDone }: { email: string; selected
           onClick={onDone}
           style={{
             display: "inline-flex", alignItems: "center", gap: 7,
-            height: 46, padding: "0 22px", background: "var(--ink)", color: "#fff",
+            height: 46, padding: "0 22px", background: "var(--accent)", color: "#fff",
             border: "none", borderRadius: 8, fontFamily: "var(--font-jakarta)", fontSize: 14,
             fontWeight: 700, cursor: "pointer", marginTop: 8,
           }}
@@ -404,12 +404,10 @@ function PageTransition({ children, view }: { children: React.ReactNode; view: s
 
 // ── Main gate ──────────────────────────────────────────────────────────────────
 export default function OnboardingGate() {
-  // Onboarding state
   const [step, setStep] = useState<OnboardStep>("checking");
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
   const [email, setEmail] = useState("");
 
-  // App state (post-onboarding)
   const [appView, setAppView] = useState<AppView>("brief");
   const [articleSlug, setArticleSlug] = useState<string | null>(null);
   const [articleFrom, setArticleFrom] = useState<"brief" | "explore">("brief");
@@ -417,7 +415,6 @@ export default function OnboardingGate() {
   const [editModalOpen, setEditModalOpen] = useState(false);
   const [comments, setComments] = useState<Record<string, Comment[]>>({});
 
-  // Load prefs on mount
   useEffect(() => {
     try {
       const raw = localStorage.getItem(STORAGE_KEY);
@@ -435,7 +432,6 @@ export default function OnboardingGate() {
     setStep("welcome");
   }, []);
 
-  // Listen for custom events from Header / Footer
   useEffect(() => {
     const handleGoView = (e: Event) => {
       const view = (e as CustomEvent).detail?.view as AppView;
@@ -456,61 +452,34 @@ export default function OnboardingGate() {
     };
   }, []);
 
-  // Notify Header of view changes
   useEffect(() => {
     window.dispatchEvent(new CustomEvent("ti:viewChange", { detail: { view: articleSlug ? "article" : appView } }));
   }, [appView, articleSlug]);
 
   const savePrefs = useCallback((ids: string[], mail: string, cmts: Record<string, Comment[]>) => {
-    const prefs: Prefs = {
-      email: mail,
-      selectedIndustries: ids,
-      completed: true,
-      comments: cmts,
-    };
+    const prefs: Prefs = { email: mail, selectedIndustries: ids, completed: true, comments: cmts };
     localStorage.setItem(STORAGE_KEY, JSON.stringify(prefs));
     window.dispatchEvent(new CustomEvent("ti:prefsChange"));
   }, []);
 
-  const handleIndustriesDone = () => {
-    if (selectedIds.length > 0) setStep("email");
-  };
-
-  const handleEmailDone = (mail: string) => {
-    setEmail(mail);
-    savePrefs(selectedIds, mail, {});
-    setStep("success");
-  };
-
-  const handleSuccessDone = () => {
-    setAppView("brief");
-    setStep("home");
-  };
+  const handleIndustriesDone = () => { if (selectedIds.length > 0) setStep("email"); };
+  const handleEmailDone = (mail: string) => { setEmail(mail); savePrefs(selectedIds, mail, {}); setStep("success"); };
+  const handleSuccessDone = () => { setAppView("brief"); setStep("home"); };
 
   const handleEditSave = (newIds: string[]) => {
     setSelectedIds(newIds);
     savePrefs(newIds, email, comments);
     setEditModalOpen(false);
-    // If viewing article of a now-deselected industry, go back to brief
     if (articleSlug && !newIds.includes(articleSlug)) {
-      setArticleSlug(null);
-      setAppView("brief");
-      window.scrollTo(0, 0);
+      setArticleSlug(null); setAppView("brief"); window.scrollTo(0, 0);
     }
   };
 
   const handleOpenArticle = (slug: string, from: "brief" | "explore") => {
-    setArticleSlug(slug);
-    setArticleFrom(from);
-    setScrollToDisc(false);
-    window.scrollTo(0, 0);
+    setArticleSlug(slug); setArticleFrom(from); setScrollToDisc(false); window.scrollTo(0, 0);
   };
 
-  const handleBack = () => {
-    setArticleSlug(null);
-    setScrollToDisc(false);
-    window.scrollTo(0, 0);
-  };
+  const handleBack = () => { setArticleSlug(null); setScrollToDisc(false); window.scrollTo(0, 0); };
 
   const handleCommentsChange = (slug: string, newComments: Comment[]) => {
     const updated = { ...comments, [slug]: newComments };
@@ -518,17 +487,13 @@ export default function OnboardingGate() {
     savePrefs(selectedIds, email, updated);
   };
 
-  // Don't render anything while checking localStorage
   if (step === "checking") return null;
 
-  // Derive selected Industry objects
   const selectedIndustries = industries.filter((i) => selectedIds.includes(i.slug));
   const articleIndustry = articleSlug ? industries.find((i) => i.slug === articleSlug) : null;
 
-  // ── Home SPA (post-onboarding) ─────────────────────────────────────────────
   if (step === "home") {
     const viewKey = articleSlug || appView;
-
     return (
       <>
         <PageTransition view={viewKey}>
@@ -544,60 +509,29 @@ export default function OnboardingGate() {
           ) : appView === "explore" ? (
             <ExplorePage onOpenArticle={handleOpenArticle} />
           ) : (
-            <BriefPage
-              selectedIndustries={selectedIndustries}
-              email={email}
-              onOpenArticle={handleOpenArticle}
-            />
+            <BriefPage selectedIndustries={selectedIndustries} email={email} onOpenArticle={handleOpenArticle} />
           )}
         </PageTransition>
-
         {editModalOpen && (
-          <EditIndustriesModal
-            selectedIds={selectedIds}
-            onSave={handleEditSave}
-            onClose={() => setEditModalOpen(false)}
-          />
+          <EditIndustriesModal selectedIds={selectedIds} onSave={handleEditSave} onClose={() => setEditModalOpen(false)} />
         )}
       </>
     );
   }
 
-  // ── Onboarding overlay (covers header via z-[110]) ─────────────────────────
   return (
-    <div
-      style={{
-        position: "fixed",
-        inset: 0,
-        zIndex: 110,
-        background: "var(--bg)",
-        overflowY: "auto",
-        display: "flex",
-        alignItems: "flex-start",
-        justifyContent: "stretch",
-      }}
-    >
+    <div style={{ position: "fixed", inset: 0, zIndex: 110, background: "var(--bg)", overflowY: "auto", display: "flex", alignItems: "flex-start", justifyContent: "stretch" }}>
       <div style={{ width: "100%" }}>
-        {step === "welcome" && (
-          <WelcomeScreen onNext={() => setStep("industries")} />
-        )}
+        {step === "welcome" && <WelcomeScreen onNext={() => setStep("industries")} />}
         {step === "industries" && (
           <IndustriesScreen
             selectedIds={selectedIds}
-            onToggle={(id) => {
-              setSelectedIds((prev) =>
-                prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id]
-              );
-            }}
+            onToggle={(id) => setSelectedIds((prev) => prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id])}
             onNext={handleIndustriesDone}
           />
         )}
-        {step === "email" && (
-          <EmailScreen selectedIds={selectedIds} onNext={handleEmailDone} />
-        )}
-        {step === "success" && (
-          <SuccessScreen email={email} selectedIds={selectedIds} onDone={handleSuccessDone} />
-        )}
+        {step === "email" && <EmailScreen selectedIds={selectedIds} onNext={handleEmailDone} />}
+        {step === "success" && <SuccessScreen email={email} selectedIds={selectedIds} onDone={handleSuccessDone} />}
       </div>
     </div>
   );

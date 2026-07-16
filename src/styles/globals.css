@@ -20,6 +20,28 @@
   --dur-modal: 260ms;
   --dur-page:  300ms;
   --ease:      cubic-bezier(0.22, 1, 0.36, 1);
+
+  /* ── Accent colour system ─────────────────────────────────────────────────
+     Switch via data-accent on <html>: "aubergine" | "forest" | (default = cobalt)
+     Dev picker sets this via ?accent= query param.
+  ── */
+  --accent:      #3157D5;
+  --accent-h:    #2448C4;
+  --accent-soft: rgba(49, 87, 213, 0.09);
+}
+
+/* Option B — Aubergine */
+html[data-accent="aubergine"] {
+  --accent:      #5B3F70;
+  --accent-h:    #4A3059;
+  --accent-soft: rgba(91, 63, 112, 0.09);
+}
+
+/* Option C — Forest */
+html[data-accent="forest"] {
+  --accent:      #2E5943;
+  --accent-h:    #22432F;
+  --accent-soft: rgba(46, 89, 67, 0.09);
 }
 
 *, *::before, *::after {
@@ -49,9 +71,9 @@ body {
 ::-webkit-scrollbar-thumb:hover { background: var(--ink-3); }
 
 /* ── Selection & focus ────────────────────────────────────────────────────── */
-::selection { background: rgba(65, 101, 232, 0.18); }
+::selection { background: var(--accent-soft); }
 :focus-visible {
-  outline: 2px solid var(--cobalt);
+  outline: 2px solid var(--accent);
   outline-offset: 3px;
   border-radius: 4px;
 }
@@ -80,4 +102,33 @@ body {
 }
 @media (max-width: 700px) {
   :root { --pad: 20px; }
+}
+
+/* ── Brief page layout classes ─────────────────────────────────────────────── */
+.ti-hd-grid       { display: grid; grid-template-columns: 1fr 320px; gap: 80px; align-items: end; }
+.ti-stories-grid  { display: grid; grid-template-columns: 1fr; border-bottom: 1px solid var(--rule); }
+.ti-stories-grid.has-secondary { grid-template-columns: 5fr 3fr; }
+.ti-lead          { padding: 40px 48px 40px 0; cursor: pointer; }
+.ti-lead.has-secondary { border-right: 1px solid var(--rule); }
+.ti-lead-art      { border-radius: 16px; overflow: hidden; margin-bottom: 28px; height: 380px; position: relative; }
+.ti-lead-art.has-secondary { height: 300px; }
+.ti-secondary     { padding: 40px 0 40px 48px; cursor: pointer; display: flex; flex-direction: column; }
+.ti-secondary-art { border-radius: 14px; overflow: hidden; margin-bottom: 22px; height: 220px; position: relative; flex-shrink: 0; }
+.ti-inbrief-grid  { display: grid; grid-template-columns: 1fr 1fr; border-top: 1px solid var(--rule-lt); }
+.ti-inbrief-item  { padding: 20px 0; border-bottom: 1px solid var(--rule-lt); }
+.ti-inbrief-item.odd  { padding-right: 36px; border-right: 1px solid var(--rule-lt); }
+.ti-inbrief-item.even { padding-left: 36px; }
+.ti-subscribe-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+
+@media (max-width: 700px) {
+  .ti-hd-grid { grid-template-columns: 1fr; gap: 24px; }
+  .ti-stories-grid.has-secondary { grid-template-columns: 1fr; }
+  .ti-lead, .ti-lead.has-secondary { padding: 32px 0 28px; border-right: none; }
+  .ti-lead-art, .ti-lead-art.has-secondary { height: 200px; margin-bottom: 20px; }
+  .ti-secondary { padding: 28px 0 32px; border-top: 1px solid var(--rule); }
+  .ti-secondary-art { height: 180px; margin-bottom: 18px; }
+  .ti-inbrief-grid { grid-template-columns: 1fr; }
+  .ti-inbrief-item.odd  { padding-right: 0; border-right: none; }
+  .ti-inbrief-item.even { padding-left: 0; }
+  .ti-subscribe-grid { grid-template-columns: 1fr; gap: 32px; }
 }

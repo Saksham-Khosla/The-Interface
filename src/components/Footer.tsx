@@ -13,7 +13,7 @@ export default function Footer() {
   };
 
   return (
-    <footer role="contentinfo" style={{ background: "var(--ink)" }}>
+    <footer role="contentinfo" style={{ background: "var(--ink)", borderTop: "4px solid var(--accent)" }}>
       <div style={{ maxWidth: "var(--w)", margin: "0 auto", padding: "0 var(--pad)" }}>
         {/* Top grid */}
         <div
@@ -87,11 +87,8 @@ export default function Footer() {
         <div
           style={{
             padding: "22px 0",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            fontSize: 12,
-            color: "rgba(255,255,255,0.28)",
+            display: "flex", alignItems: "center", justifyContent: "space-between",
+            fontSize: 12, color: "rgba(255,255,255,0.28)",
           }}
         >
           <span>© 2026 The Inference</span>
