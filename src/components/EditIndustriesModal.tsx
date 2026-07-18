@@ -94,21 +94,13 @@ export default function EditIndustriesModal({
       aria-label="Edit industries"
       onKeyDown={handleKeyDown}
       onClick={(e) => { if (e.target === overlayRef.current) close(); }}
-      style={{
-        position: "fixed", inset: 0, zIndex: 200,
-        background: "rgba(21,21,19,0.58)",
-        display: "flex", alignItems: "flex-start", justifyContent: "center",
-        padding: "48px 20px 80px", overflowY: "auto",
-      }}
+      className="ti-modal-overlay"
     >
       <div
         ref={panelRef}
-        style={{
-          background: "var(--surface)", border: "1px solid var(--rule)",
-          borderRadius: 16, padding: "36px 36px 32px",
-          width: "100%", maxWidth: 660, position: "relative",
-        }}
+        className="ti-modal-panel"
       >
+        <div className="ti-modal-scroll">
         <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", marginBottom: 6 }}>
           <h2 style={{ fontSize: 21, fontWeight: 800, letterSpacing: "-0.03em", color: "var(--ink)" }}>
             Edit your industries
@@ -133,7 +125,7 @@ export default function EditIndustriesModal({
           Your Brief updates immediately. Pick as many as you like.
         </p>
 
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 9, marginBottom: 4 }}>
+        <div className="ti-modal-cards">
           {industries.map((ind, i) => {
             const sel = draft.includes(ind.slug);
             const num = String(i + 1).padStart(2, "0");
@@ -182,8 +174,9 @@ export default function EditIndustriesModal({
             );
           })}
         </div>
+        </div>{/* end ti-modal-scroll */}
 
-        <div style={{ display: "flex", alignItems: "center", justifyContent: "flex-end", gap: 10, marginTop: 20, paddingTop: 20, borderTop: "1px solid var(--rule-lt)" }}>
+        <div className="ti-modal-actions">
           <button
             onClick={close}
             style={{

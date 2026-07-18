@@ -53,7 +53,10 @@ export default function BriefPage({
               <p className="eyebrow" style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "var(--ink-3)", marginBottom: 14, display: "flex", alignItems: "center", gap: 10 }}>
                 Your Brief <span style={{ color: "var(--rule-lt)" }}>/</span> Issue #{ISSUE_NUM}
               </p>
-              <h1 style={{ fontSize: "clamp(34px,3.8vw,58px)", fontWeight: 800, letterSpacing: "-0.04em", lineHeight: 1, color: "var(--ink)" }}>
+              <h1
+                className="ti-brief-headline"
+                style={{ fontSize: "clamp(28px,3.8vw,58px)", fontWeight: 800, letterSpacing: "-0.04em", lineHeight: 1.05, color: "var(--ink)", textWrap: "balance" } as React.CSSProperties}
+              >
                 {nameStr}.<br />Reduced to what matters.
               </h1>
             </div>
@@ -204,7 +207,7 @@ export default function BriefPage({
 
       {/* Subscription strip */}
       <div style={{ background: "var(--accent-strong)", borderTop: "1px solid rgba(0,0,0,0.15)" }}>
-        <div className="ti-subscribe-grid" style={{ maxWidth: "var(--w)", margin: "0 auto", padding: "52px var(--pad)" }}>
+        <div className="ti-subscribe-grid" style={{ maxWidth: "var(--w)", margin: "0 auto", padding: "clamp(36px,4vw,52px) var(--pad) calc(clamp(36px,4vw,52px) + env(safe-area-inset-bottom))" }}>
           <h2 style={{ fontSize: "clamp(24px,2.6vw,36px)", fontWeight: 800, letterSpacing: "-0.035em", lineHeight: 1.1, color: "var(--on-accent)" }}>
             Share The Inference<br />with a colleague.
           </h2>
@@ -223,7 +226,7 @@ export default function BriefPage({
                   placeholder="colleague@example.com"
                   style={{
                     flex: 1, height: 44, border: "1px solid rgba(255,255,255,0.25)", borderRadius: 7,
-                    padding: "0 16px", fontFamily: "var(--font-jakarta)", fontSize: 14, color: "var(--ink)",
+                    padding: "0 16px", fontFamily: "var(--font-jakarta)", fontSize: 16, color: "var(--ink)",
                     background: "rgba(255,255,255,0.92)", outline: "none",
                   }}
                 />

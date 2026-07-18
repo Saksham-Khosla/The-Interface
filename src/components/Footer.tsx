@@ -12,19 +12,18 @@ export default function Footer() {
     window.dispatchEvent(new CustomEvent("ti:openEditModal"));
   };
 
+  const linkStyle: React.CSSProperties = {
+    fontSize: 13, color: "rgba(255,255,255,0.45)", background: "none",
+    border: "none", cursor: "pointer", padding: 0, textAlign: "left",
+    fontFamily: "var(--font-jakarta)", transition: "color 150ms ease",
+    minHeight: 32, display: "flex", alignItems: "center",
+  };
+
   return (
     <footer role="contentinfo" style={{ background: "var(--ink)", borderTop: "4px solid var(--accent)" }}>
       <div style={{ maxWidth: "var(--w)", margin: "0 auto", padding: "0 var(--pad)" }}>
         {/* Top grid */}
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "1.2fr 1fr 1fr",
-            gap: 56,
-            padding: "48px 0 36px",
-            borderBottom: "1px solid rgba(255,255,255,0.08)",
-          }}
-        >
+        <div className="ti-footer-top">
           {/* Brand */}
           <div>
             <span style={{ fontSize: 15, fontWeight: 800, letterSpacing: "-0.025em", color: "#fff", display: "block", marginBottom: 10 }}>
@@ -43,7 +42,7 @@ export default function Footer() {
             <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
               <button
                 onClick={() => goView("brief")}
-                style={{ fontSize: 13, color: "rgba(255,255,255,0.45)", background: "none", border: "none", cursor: "pointer", padding: 0, textAlign: "left", fontFamily: "var(--font-jakarta)", transition: "color 150ms ease" }}
+                style={linkStyle}
                 onMouseEnter={(e) => (e.currentTarget.style.color = "rgba(255,255,255,0.9)")}
                 onMouseLeave={(e) => (e.currentTarget.style.color = "rgba(255,255,255,0.45)")}
               >
@@ -51,7 +50,7 @@ export default function Footer() {
               </button>
               <button
                 onClick={() => goView("explore")}
-                style={{ fontSize: 13, color: "rgba(255,255,255,0.45)", background: "none", border: "none", cursor: "pointer", padding: 0, textAlign: "left", fontFamily: "var(--font-jakarta)", transition: "color 150ms ease" }}
+                style={linkStyle}
                 onMouseEnter={(e) => (e.currentTarget.style.color = "rgba(255,255,255,0.9)")}
                 onMouseLeave={(e) => (e.currentTarget.style.color = "rgba(255,255,255,0.45)")}
               >
@@ -59,7 +58,7 @@ export default function Footer() {
               </button>
               <button
                 onClick={openEditModal}
-                style={{ fontSize: 13, color: "rgba(255,255,255,0.45)", background: "none", border: "none", cursor: "pointer", padding: 0, textAlign: "left", fontFamily: "var(--font-jakarta)", transition: "color 150ms ease" }}
+                style={linkStyle}
                 onMouseEnter={(e) => (e.currentTarget.style.color = "rgba(255,255,255,0.9)")}
                 onMouseLeave={(e) => (e.currentTarget.style.color = "rgba(255,255,255,0.45)")}
               >
@@ -84,13 +83,7 @@ export default function Footer() {
         </div>
 
         {/* Bottom bar */}
-        <div
-          style={{
-            padding: "22px 0",
-            display: "flex", alignItems: "center", justifyContent: "space-between",
-            fontSize: 12, color: "rgba(255,255,255,0.28)",
-          }}
-        >
+        <div className="ti-footer-bottom">
           <span>© 2026 The Inference</span>
           <span style={{ fontStyle: "italic" }}>Written for people inside the industries being rewritten.</span>
         </div>

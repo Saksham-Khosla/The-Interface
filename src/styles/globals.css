@@ -15,35 +15,43 @@
   --blush:   #F5E5DF;
   --w:       1320px;
   --pad:     48px;
+  --hh:      50px; /* header height */
   --dur-fast:  150ms;
   --dur-mid:   200ms;
   --dur-modal: 260ms;
   --dur-page:  300ms;
   --ease:      cubic-bezier(0.22, 1, 0.36, 1);
 
-  /* ── Accent colour system ─────────────────────────────────────────────────
-     Switch via data-accent on <html>: "aubergine" | "forest" | (default = cobalt)
-     Dev picker sets this via ?accent= query param.
-  ── */
-  --accent:      #3157D5;
-  --accent-h:    #2448C4;
-  --accent-soft: rgba(49, 87, 213, 0.09);
+  --accent:        #3157D5;
+  --accent-strong: #1A3AB8;
+  --accent-h:      #2448C4;
+  --accent-muted:  #7090E8;
+  --accent-soft:   #C8D4F7;
+  --accent-faint:  #EEF1FC;
+  --on-accent:     #FFFFFF;
 }
 
-/* Option B — Aubergine */
 html[data-accent="aubergine"] {
-  --accent:      #5B3F70;
-  --accent-h:    #4A3059;
-  --accent-soft: rgba(91, 63, 112, 0.09);
+  --accent-strong: #3A2349;
+  --accent:        #5B3F70;
+  --accent-muted:  #9070A8;
+  --accent-soft:   #D8C8EA;
+  --accent-faint:  #F3EEF7;
+  --on-accent:     #FFFFFF;
+  --accent-h:      #4A3059;
 }
 
-/* Option C — Forest */
 html[data-accent="forest"] {
-  --accent:      #2E5943;
-  --accent-h:    #22432F;
-  --accent-soft: rgba(46, 89, 67, 0.09);
+  --accent-strong: #1A3B2B;
+  --accent:        #2E5943;
+  --accent-muted:  #5E8C74;
+  --accent-soft:   #C0D8CC;
+  --accent-faint:  #EAF2EE;
+  --on-accent:     #FFFFFF;
+  --accent-h:      #22432F;
 }
 
+/* ── Reset ──────────────────────────────────────────────────────────────────── */
 *, *::before, *::after {
   box-sizing: border-box;
   margin: 0;
@@ -53,6 +61,8 @@ html[data-accent="forest"] {
 html {
   font-size: 16px;
   scroll-behavior: smooth;
+  /* Prevent horizontal overflow globally */
+  overflow-x: clip;
 }
 
 body {
@@ -62,6 +72,7 @@ body {
   min-height: 100vh;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow-x: clip;
 }
 
 /* ── Scrollbar ───────────────────────────────────────────────────────────── */
@@ -96,15 +107,61 @@ body {
   }
 }
 
-/* ── Editorial responsive vars ────────────────────────────────────────────── */
-@media (max-width: 1060px) {
-  :root { --pad: 32px; }
+/* ── Responsive padding vars ──────────────────────────────────────────────── */
+@media (max-width: 1060px) { :root { --pad: 32px; } }
+@media (max-width: 900px)  { :root { --pad: 24px; } }
+@media (max-width: 639px)  { :root { --pad: 20px; } }
+
+
+/* ══════════════════════════════════════════════════════════════════════════════
+   HEADER
+══════════════════════════════════════════════════════════════════════════════ */
+
+/* Desktop nav: visible. Mobile button: hidden. */
+.ti-desktop-nav    { display: flex; align-items: stretch; }
+.ti-mobile-menu-btn { display: none; align-items: center; justify-content: center;
+                      height: 44px; min-width: 44px; padding: 0 8px;
+                      background: none; border: none; cursor: pointer;
+                      font-family: var(--font-jakarta); font-size: 13px; font-weight: 600;
+                      color: var(--ink-2); letter-spacing: -0.01em; }
+
+/* Mobile nav overlay */
+.ti-mobile-overlay {
+  position: fixed; top: var(--hh); left: 0; right: 0; bottom: 0;
+  z-index: 99; background: var(--bg);
+  display: flex; flex-direction: column;
+  padding: 8px 0 env(safe-area-inset-bottom);
+  border-top: 1px solid var(--rule-lt);
+  overflow-y: auto;
 }
-@media (max-width: 700px) {
-  :root { --pad: 20px; }
+.ti-mobile-overlay-item {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 var(--pad); height: 56px; min-height: 44px;
+  font-family: var(--font-jakarta); font-size: 17px; font-weight: 600;
+  color: var(--ink); text-align: left;
+  background: none; border: none; cursor: pointer;
+  border-bottom: 1px solid var(--rule-lt);
+  transition: background 120ms ease;
+  white-space: nowrap;
+}
+.ti-mobile-overlay-item:active { background: var(--accent-faint); }
+.ti-mobile-overlay-item.active { color: var(--accent); }
+.ti-mobile-overlay-item-arrow { font-size: 15px; color: var(--accent); opacity: 0.6; }
+
+@media (max-width: 639px) {
+  .ti-desktop-nav     { display: none !important; }
+  .ti-mobile-menu-btn { display: flex !important; }
 }
 
-/* ── Brief page layout classes ─────────────────────────────────────────────── */
+@media (min-width: 640px) {
+  .ti-mobile-overlay { display: none !important; }
+}
+
+
+/* ══════════════════════════════════════════════════════════════════════════════
+   BRIEF PAGE LAYOUT
+══════════════════════════════════════════════════════════════════════════════ */
+
 .ti-hd-grid       { display: grid; grid-template-columns: 1fr 320px; gap: 80px; align-items: end; }
 .ti-stories-grid  { display: grid; grid-template-columns: 1fr; border-bottom: 1px solid var(--rule); }
 .ti-stories-grid.has-secondary { grid-template-columns: 5fr 3fr; }
@@ -120,15 +177,138 @@ body {
 .ti-inbrief-item.even { padding-left: 36px; }
 .ti-subscribe-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
 
-@media (max-width: 700px) {
-  .ti-hd-grid { grid-template-columns: 1fr; gap: 24px; }
+@media (max-width: 639px) {
+  /* Page header */
+  .ti-hd-grid { grid-template-columns: 1fr; gap: 16px; }
+
+  /* Stories */
   .ti-stories-grid.has-secondary { grid-template-columns: 1fr; }
-  .ti-lead, .ti-lead.has-secondary { padding: 32px 0 28px; border-right: none; }
-  .ti-lead-art, .ti-lead-art.has-secondary { height: 200px; margin-bottom: 20px; }
-  .ti-secondary { padding: 28px 0 32px; border-top: 1px solid var(--rule); }
-  .ti-secondary-art { height: 180px; margin-bottom: 18px; }
+  .ti-lead, .ti-lead.has-secondary { padding: 28px 0 24px; border-right: none; }
+  .ti-lead-art, .ti-lead-art.has-secondary { height: 200px; margin-bottom: 18px; }
+  .ti-secondary { padding: 24px 0 28px; border-top: 1px solid var(--rule); }
+  .ti-secondary-art { height: 170px; margin-bottom: 16px; }
+
+  /* In Brief */
   .ti-inbrief-grid { grid-template-columns: 1fr; }
   .ti-inbrief-item.odd  { padding-right: 0; border-right: none; }
   .ti-inbrief-item.even { padding-left: 0; }
-  .ti-subscribe-grid { grid-template-columns: 1fr; gap: 32px; }
+
+  /* Subscribe */
+  .ti-subscribe-grid { grid-template-columns: 1fr; gap: 24px; }
+}
+
+@media (max-width: 900px) and (min-width: 640px) {
+  /* Tablet: keep 2-col but tighten */
+  .ti-hd-grid { grid-template-columns: 1fr; gap: 24px; }
+  .ti-stories-grid.has-secondary { grid-template-columns: 3fr 2fr; }
+  .ti-lead { padding: 32px 32px 32px 0; }
+  .ti-secondary { padding: 32px 0 32px 32px; }
+  .ti-lead-art.has-secondary { height: 240px; }
+  .ti-secondary-art { height: 180px; }
+  .ti-subscribe-grid { grid-template-columns: 1fr; gap: 28px; }
+}
+
+
+/* ══════════════════════════════════════════════════════════════════════════════
+   EXPLORE PAGE
+══════════════════════════════════════════════════════════════════════════════ */
+
+.ti-explore-row { display: grid; grid-template-columns: 1fr 1fr; }
+.ti-explore-about { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; }
+
+@media (max-width: 639px) {
+  .ti-explore-hd { padding: 28px 0 24px !important; }
+  .ti-explore-row { grid-template-columns: 1fr; }
+  /* Remove left grid border on mobile — cells go full width */
+  .ti-explore-wrap { border-left: none !important; border-top: none !important; }
+  .ti-explore-cell { border-right: none !important; padding: 22px 0 !important; }
+  .ti-explore-about { grid-template-columns: 1fr; gap: 28px; }
+  .ti-explore-about-wrap { padding-top: 32px !important; padding-bottom: 32px !important; }
+}
+
+@media (max-width: 900px) and (min-width: 640px) {
+  .ti-explore-about { grid-template-columns: 1fr; gap: 24px; }
+}
+
+
+/* ══════════════════════════════════════════════════════════════════════════════
+   FOOTER
+══════════════════════════════════════════════════════════════════════════════ */
+
+.ti-footer-top {
+  display: grid; grid-template-columns: 1.2fr 1fr 1fr;
+  gap: 56px; padding: 48px 0 36px;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+.ti-footer-bottom {
+  padding: 22px 0 calc(22px + env(safe-area-inset-bottom));
+  display: flex; align-items: center; justify-content: space-between;
+  font-size: 12px; color: rgba(255,255,255,0.28);
+}
+
+@media (max-width: 639px) {
+  .ti-footer-top    { grid-template-columns: 1fr; gap: 28px; padding: 32px 0 24px; }
+  .ti-footer-bottom { flex-direction: column; align-items: flex-start; gap: 8px;
+                      padding-bottom: calc(20px + env(safe-area-inset-bottom)); }
+}
+
+
+/* ══════════════════════════════════════════════════════════════════════════════
+   ARTICLE PAGE
+══════════════════════════════════════════════════════════════════════════════ */
+
+.ti-article-art { border-radius: 16px; overflow: hidden; height: 280px; position: relative; }
+
+.ti-comment-form { display: flex; gap: 8px; }
+
+@media (max-width: 639px) {
+  .ti-article-art  { height: 190px; border-radius: 10px; }
+  .ti-comment-form { flex-direction: column; }
+  .ti-comment-form input  { width: 100%; font-size: 16px; } /* 16px prevents iOS zoom */
+  .ti-comment-form button { width: 100%; }
+}
+
+
+/* ══════════════════════════════════════════════════════════════════════════════
+   EDIT INDUSTRIES MODAL
+══════════════════════════════════════════════════════════════════════════════ */
+
+.ti-modal-overlay {
+  position: fixed; inset: 0; z-index: 200;
+  background: rgba(21,21,19,0.58);
+  display: flex; align-items: flex-start; justify-content: center;
+  padding: 48px 20px 80px; overflow-y: auto;
+}
+.ti-modal-panel {
+  background: var(--surface); border: 1px solid var(--rule);
+  border-radius: 16px; padding: 36px 36px 32px;
+  width: 100%; max-width: 660px; position: relative;
+}
+.ti-modal-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 9px; margin-bottom: 4px; }
+.ti-modal-actions {
+  display: flex; align-items: center; justify-content: flex-end; gap: 10px;
+  margin-top: 20px; padding-top: 20px; border-top: 1px solid var(--rule-lt);
+}
+
+@media (max-width: 639px) {
+  .ti-modal-overlay { align-items: flex-end; padding: 0; overflow-y: hidden; }
+  .ti-modal-panel   { border-radius: 20px 20px 0 0; border-bottom: none;
+                      padding: 20px 20px 0; max-height: 92vh;
+                      display: flex; flex-direction: column; overflow: hidden; }
+  .ti-modal-scroll  { flex: 1; overflow-y: auto; padding-bottom: 16px;
+                      -webkit-overflow-scrolling: touch; }
+  .ti-modal-cards   { grid-template-columns: 1fr; gap: 8px; }
+  .ti-modal-actions { margin-top: 0; padding: 14px 0 calc(14px + env(safe-area-inset-bottom));
+                      border-top: 1px solid var(--rule-lt); flex-shrink: 0; }
+}
+
+
+/* ══════════════════════════════════════════════════════════════════════════════
+   ONBOARDING — industry card grid
+══════════════════════════════════════════════════════════════════════════════ */
+
+.ti-ind-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+
+@media (max-width: 639px) {
+  .ti-ind-grid { grid-template-columns: 1fr; gap: 8px; }
 }

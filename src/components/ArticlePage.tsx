@@ -69,7 +69,7 @@ export default function ArticlePage({
   return (
     <div>
       {/* Article header */}
-      <div style={{ borderBottom: "1px solid var(--ink)", padding: "52px 0 48px", background: industry.tint }}>
+      <div style={{ borderBottom: "1px solid var(--ink)", padding: "clamp(28px,4vw,52px) 0 clamp(24px,3.5vw,48px)", background: industry.tint }}>
         <div style={{ maxWidth: 780, margin: "0 auto", padding: "0 var(--pad)" }}>
           <button
             onClick={onBack}
@@ -110,14 +110,14 @@ export default function ArticlePage({
       </div>
 
       {/* Art panel */}
-      <div style={{ maxWidth: 780, margin: "0 auto", padding: "32px var(--pad) 0" }}>
-        <div style={{ borderRadius: 16, overflow: "hidden", height: 280, position: "relative" }}>
+      <div style={{ maxWidth: 780, margin: "0 auto", padding: "28px var(--pad) 0" }}>
+        <div className="ti-article-art">
           <ArtPanel id={industry.slug} />
         </div>
       </div>
 
       {/* Article body */}
-      <div style={{ maxWidth: 780, margin: "0 auto", padding: "52px var(--pad) 64px" }}>
+      <div style={{ maxWidth: 780, margin: "0 auto", padding: "clamp(32px,4vw,52px) var(--pad) clamp(40px,5vw,64px)" }}>
         {articleData?.sections.map((section, i) => (
           <div key={i}>
             {section.h && (
@@ -194,7 +194,7 @@ export default function ArticlePage({
         <label style={{ display: "block", fontSize: 11, fontWeight: 700, letterSpacing: "0.06em", textTransform: "uppercase", color: "var(--ink-3)", marginBottom: 8 }}>
           Add a comment
         </label>
-        <div style={{ display: "flex", gap: 8 }}>
+        <div className="ti-comment-form">
           <input
             type="text"
             value={draft}
@@ -203,8 +203,9 @@ export default function ArticlePage({
             placeholder="Share a thought…"
             style={{
               flex: 1, height: 44, border: "1px solid var(--rule)", borderRadius: 8,
-              padding: "0 14px", fontFamily: "var(--font-jakarta)", fontSize: 14, color: "var(--ink)",
-              background: "var(--surface)", outline: "none",
+              padding: "0 14px", fontFamily: "var(--font-jakarta)",
+              fontSize: 16, /* 16px prevents iOS auto-zoom */
+              color: "var(--ink)", background: "var(--surface)", outline: "none",
             }}
             onFocus={(e) => (e.currentTarget.style.borderColor = "var(--accent)")}
             onBlur={(e) => (e.currentTarget.style.borderColor = "var(--rule)")}
