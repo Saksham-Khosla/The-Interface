@@ -74,31 +74,46 @@ const INDUSTRY_META: Record<string, IndustryMeta> = {
   },
 };
 
-const ALL_CHIPS = [
-  { slug: "finance",    name: "Finance",    color: "#4ade80" },
-  { slug: "education",  name: "Education",  color: "#fbbf24" },
-  { slug: "law",        name: "Law",        color: "#a78bfa" },
-  { slug: "healthcare", name: "Healthcare", color: "#f87171" },
-  { slug: "work",       name: "Work",       color: "#38bdf8" },
-  { slug: "startups",   name: "Startups",   color: "#fb923c" },
-  { slug: "media",      name: "Media",      color: "#f472b6" },
-];
+// ─── Industry short descriptions (mirrors src/lib/industries.ts shortDesc) ──
 
-// ─── Email builder ─────────────────────────────────────────────────────────
+const INDUSTRY_SHORT: Record<string, { name: string; desc: string }> = {
+  finance:    { name: "Finance",    desc: "Banking, markets, fintech and investing." },
+  education:  { name: "Education",  desc: "Schools, universities and learning technology." },
+  law:        { name: "Law",        desc: "Legal work, regulation and the changing profession." },
+  healthcare: { name: "Healthcare", desc: "Clinical systems, diagnostics and patient care." },
+  work:       { name: "Work",       desc: "Productivity, hiring and the future of the office." },
+  startups:   { name: "Startups",   desc: "Venture, founding and building in the AI era." },
+  media:      { name: "Media",      desc: "Publishing, entertainment and content creation." },
+};
 
-function buildWelcomeEmail(industries: string[]): string {
-  // Feature the first selected industry; fall back to Finance
-  const featuredSlug = industries[0] ?? "finance";
-  const featured = INDUSTRY_META[featuredSlug] ?? INDUSTRY_META.finance;
+// ─── Email builder (cream/editorial design) ────────────────────────────────
 
-  // Show all OTHER industries as "also covering" chips
-  const otherChips = ALL_CHIPS.filter((c) => c.slug !== featuredSlug);
-  const chipsHtml = otherChips
-    .map(
-      (c) =>
-        `<span class="chip" style="display:inline-block; margin:0 8px 8px 0; padding:7px 12px; border:1px solid rgba(125,211,252,0.12); border-radius:999px; font-family:'Helvetica Neue',Helvetica,Arial,sans-serif; font-size:12.5px; color:#9aa4b8; white-space:nowrap;"><span style="color:${c.color};">&bull;</span>&nbsp; ${c.name}</span>`
-    )
-    .join("");
+function buildWelcomeEmail(selectedSlugs: string[]): string {
+  const slugs = selectedSlugs.length > 0 ? selectedSlugs : ["finance"];
+
+  // Industry rows — one per selected industry
+  const industryRowsHtml = slugs.map((slug, i) => {
+    const meta = INDUSTRY_SHORT[slug] ?? { name: slug, desc: "" };
+    const num  = String(i + 1).padStart(2, "0");
+    const isLast = i === slugs.length - 1;
+    return `
+                <tr>
+                  <td style="padding:18px 20px;${isLast ? "" : " border-bottom:1px solid #CBC8BE;"}">
+                    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"><tr>
+                      <td valign="top" width="34" style="font-family:Arial,Helvetica,sans-serif; font-size:14px; font-weight:700; color:#3157D5;">${num}</td>
+                      <td style="font-family:Arial,Helvetica,sans-serif;">
+                        <div style="font-size:16px; font-weight:700; color:#11110F;">${meta.name}</div>
+                        <div style="font-size:14px; color:#6C6962; margin-top:3px;">${meta.desc}</div>
+                      </td>
+                    </tr></table>
+                  </td>
+                </tr>`;
+  }).join("");
+
+  // Featured story — first selected industry
+  const featuredSlug = slugs[0];
+  const featuredMeta = INDUSTRY_META[featuredSlug] ?? INDUSTRY_META.finance;
+  const featuredName = INDUSTRY_SHORT[featuredSlug]?.name ?? featuredMeta.name;
 
   return `<!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
@@ -107,8 +122,8 @@ function buildWelcomeEmail(industries: string[]): string {
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="x-apple-disable-message-reformatting">
-  <meta name="color-scheme" content="dark">
-  <meta name="supported-color-schemes" content="dark">
+  <meta name="color-scheme" content="light">
+  <meta name="supported-color-schemes" content="light">
   <title>Welcome to The Inference</title>
   <!--[if mso]>
   <noscript><xml><o:OfficeDocumentSettings><o:PixelsPerInch>96</o:PixelsPerInch></o:OfficeDocumentSettings></xml></noscript>
@@ -118,152 +133,132 @@ function buildWelcomeEmail(industries: string[]): string {
     table, td { mso-table-lspace: 0pt; mso-table-rspace: 0pt; }
     img { -ms-interpolation-mode: bicubic; border: 0; height: auto; line-height: 100%; outline: none; text-decoration: none; }
     body { margin: 0 !important; padding: 0 !important; width: 100% !important; }
-    a { color: #7dd3fc; }
-    :root { color-scheme: dark; supported-color-schemes: dark; }
+    a { color: #3157D5; }
     @media only screen and (max-width: 620px) {
       .container { width: 100% !important; }
-      .px { padding-left: 24px !important; padding-right: 24px !important; }
-      .h1 { font-size: 27px !important; line-height: 1.15 !important; }
-      .chip { display: inline-block !important; margin: 0 6px 8px 0 !important; }
+      .px { padding-left: 22px !important; padding-right: 22px !important; }
+      .h1 { font-size: 32px !important; line-height: 1.2 !important; }
+      .cta-td { display: block !important; width: 100% !important; }
+      .cta-link { display: block !important; text-align: center !important; }
     }
   </style>
 </head>
-<body style="margin:0; padding:0; background-color:#040710;">
-
-  <!-- Preheader (hidden preview text) -->
-  <div style="display:none; max-height:0; overflow:hidden; mso-hide:all; font-size:1px; line-height:1px; color:#040710; opacity:0;">
-    Your personalised briefing starts with ${featured.name} &mdash; here&rsquo;s what&rsquo;s happening.
+<body style="margin:0; padding:0; background-color:#F3F1EA;">
+  <div style="display:none; max-height:0; overflow:hidden; mso-hide:all; font-size:1px; line-height:1px; color:#F3F1EA; opacity:0;">
+    Your personalised Brief is ready. Here&rsquo;s what to expect from The Inference, every Monday.
   </div>
 
-  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color:#040710;">
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color:#F3F1EA;">
     <tr>
-      <td align="center" style="padding:32px 16px 48px;">
+      <td align="center" style="padding:0;">
 
-        <table role="presentation" class="container" width="600" cellpadding="0" cellspacing="0" border="0"
-          style="width:600px; max-width:600px; background-color:#070c1a; border-radius:16px; border:1px solid rgba(125,211,252,0.10); overflow:hidden;">
+        <!-- Top cobalt rule -->
+        <table role="presentation" class="container" width="640" cellpadding="0" cellspacing="0" border="0" style="width:640px; max-width:640px;">
+          <tr><td style="height:4px; background-color:#3157D5; line-height:0; font-size:0;">&nbsp;</td></tr>
+        </table>
 
-          <!-- Accent bar (colour matches the featured industry) -->
+        <table role="presentation" class="container" width="640" cellpadding="0" cellspacing="0" border="0" style="width:640px; max-width:640px; background-color:#FAF9F5;">
+
+          <!-- Header -->
           <tr>
-            <td style="height:4px; background-color:${featured.color}; line-height:0; font-size:0;">&nbsp;</td>
-          </tr>
-
-          <!-- Header: logo + label -->
-          <tr>
-            <td class="px" style="padding:24px 40px; border-bottom:1px solid rgba(125,211,252,0.08);">
-              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
-                <tr>
-                  <td valign="middle">
-                    <table role="presentation" cellpadding="0" cellspacing="0" border="0"><tr>
-                      <td valign="middle" style="padding-right:11px;">
-                        <!-- ∴ logo tile -->
-                        <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="40" height="40"
-                          style="width:40px; height:40px; background-color:#0e1830; border:1px solid rgba(125,211,252,0.22); border-radius:11px;">
-                          <tr><td align="center" valign="middle" style="height:40px;">
-                            <table role="presentation" cellpadding="0" cellspacing="0" border="0" align="center"><tr>
-                              <td style="line-height:0; padding-bottom:3px;"><div style="width:5px; height:5px; background-color:#7dd3fc; border-radius:50%; font-size:0; line-height:0;">&nbsp;</div></td>
-                            </tr></table>
-                            <table role="presentation" cellpadding="0" cellspacing="0" border="0" align="center"><tr>
-                              <td style="line-height:0; padding-right:4px;"><div style="width:5px; height:5px; background-color:#7dd3fc; border-radius:50%; font-size:0; line-height:0;">&nbsp;</div></td>
-                              <td style="line-height:0;"><div style="width:5px; height:5px; background-color:#3b82f6; border-radius:50%; font-size:0; line-height:0;">&nbsp;</div></td>
-                            </tr></table>
-                          </td></tr>
-                        </table>
-                      </td>
-                      <td valign="middle" style="font-family:'Helvetica Neue',Helvetica,Arial,sans-serif; font-size:18px; font-weight:800; letter-spacing:-0.02em; white-space:nowrap;">
-                        <span style="color:#ffffff;">The </span><span style="color:#7dd3fc;">Inference</span>
-                      </td>
-                    </tr></table>
-                  </td>
-                  <td valign="middle" align="right" style="font-family:'Helvetica Neue',Helvetica,Arial,sans-serif; font-size:11px; letter-spacing:0.08em; text-transform:uppercase; color:#5d6577; white-space:nowrap;">
-                    Welcome
-                  </td>
-                </tr>
-              </table>
-            </td>
-          </tr>
-
-          <!-- Hero: featured industry spotlight -->
-          <tr>
-            <td class="px" style="padding:40px 48px 0;">
-              <!-- Eyebrow -->
-              <table role="presentation" cellpadding="0" cellspacing="0" border="0"><tr>
-                <td valign="middle" style="padding-right:9px; line-height:0;">
-                  <div style="width:8px; height:8px; background-color:${featured.color}; border-radius:50%; font-size:0; line-height:0;">&nbsp;</div>
-                </td>
-                <td valign="middle" style="font-family:'Helvetica Neue',Helvetica,Arial,sans-serif; font-size:11.5px; font-weight:700; letter-spacing:0.14em; text-transform:uppercase; color:${featured.color};">
-                  ${featured.eyebrow}
-                </td>
+            <td class="px" style="padding:34px 48px 22px;">
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"><tr>
+                <td valign="middle" style="font-family:Arial,Helvetica,sans-serif; font-size:20px; font-weight:700; letter-spacing:-0.01em; color:#11110F;">The Inference</td>
+                <td valign="middle" align="right" style="font-family:Arial,Helvetica,sans-serif; font-size:11.5px; font-weight:700; letter-spacing:0.14em; text-transform:uppercase; color:#6C6962;">Welcome</td>
               </tr></table>
-
-              <h1 class="h1" style="margin:16px 0 0; font-family:'Helvetica Neue',Helvetica,Arial,sans-serif; font-size:31px; line-height:1.13; font-weight:800; letter-spacing:-0.03em; color:#ffffff;">
-                ${featured.headline}
-              </h1>
-
-              <p style="margin:16px 0 0; font-family:'Helvetica Neue',Helvetica,Arial,sans-serif; font-size:16px; line-height:1.65; color:#9aa4b8;">
-                ${featured.body}
-              </p>
             </td>
           </tr>
+          <tr><td class="px" style="padding:0 48px;"><div style="height:1px; background-color:#CBC8BE; line-height:0; font-size:0;">&nbsp;</div></td></tr>
 
-          <!-- CTA button -->
-          <tr>
-            <td class="px" style="padding:26px 48px 0;">
-              <table role="presentation" cellpadding="0" cellspacing="0" border="0">
-                <tr>
-                  <td align="center" style="border-radius:10px; background-color:#2563eb;">
-                    <!--[if mso]>
-                    <v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word"
-                      href="https://the-interface-azal.vercel.app"
-                      style="height:46px;v-text-anchor:middle;width:210px;" arcsize="22%"
-                      strokecolor="#2563eb" fillcolor="#2563eb">
-                    <w:anchorlock/>
-                    <center style="color:#ffffff;font-family:Helvetica,Arial,sans-serif;font-size:15px;font-weight:bold;">Visit The Inference &rarr;</center>
-                    </v:roundrect>
-                    <![endif]-->
-                    <!--[if !mso]><!-- -->
-                    <a href="https://the-interface-azal.vercel.app"
-                      style="display:inline-block; padding:14px 26px; font-family:'Helvetica Neue',Helvetica,Arial,sans-serif; font-size:15px; font-weight:700; color:#ffffff; text-decoration:none; border-radius:10px; background-color:#2563eb;">
-                      Visit The Inference &rarr;
-                    </a>
-                    <!--<![endif]-->
-                  </td>
-                </tr>
-              </table>
-            </td>
-          </tr>
-
-          <!-- Other industries chips -->
+          <!-- Headline -->
           <tr>
             <td class="px" style="padding:36px 48px 0;">
-              <p style="margin:0 0 14px; font-family:'Helvetica Neue',Helvetica,Arial,sans-serif; font-size:13px; line-height:1.6; color:#6b7384;">
-                You&rsquo;ll get one of these every week &mdash; across six more industries:
-              </p>
-              ${chipsHtml}
+              <p style="margin:0; font-family:Arial,Helvetica,sans-serif; font-size:12.5px; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; color:#3157D5;">Welcome to The Inference</p>
+              <h1 class="h1" style="margin:16px 0 0; font-family:Arial,Helvetica,sans-serif; font-size:42px; line-height:1.18; font-weight:700; letter-spacing:-0.015em; color:#11110F;">You are in. Your AI briefing starts here.</h1>
             </td>
           </tr>
 
-          <!-- Reply invitation -->
+          <!-- Intro -->
           <tr>
-            <td class="px" style="padding:32px 48px 0; font-family:'Helvetica Neue',Helvetica,Arial,sans-serif; font-size:16px; line-height:1.65; color:#9aa4b8;">
-              <p style="margin:0;">Got a story tip or a question? Just hit reply &mdash; a real person reads every message.</p>
+            <td class="px" style="padding:20px 48px 0; font-family:Arial,Helvetica,sans-serif; font-size:16.5px; line-height:1.65; color:#3a3934;">
+              <p style="margin:0;">Thanks for joining The Inference. Each week, we examine what artificial intelligence is genuinely changing across the industries you follow &mdash; without the hype, noise or generic roundups.</p>
+              <p style="margin:14px 0 0;">Your personalised Brief will arrive every Monday.</p>
             </td>
           </tr>
 
-          <!-- Sign-off -->
+          <!-- Your industries -->
           <tr>
-            <td class="px" style="padding:22px 48px 44px; font-family:'Helvetica Neue',Helvetica,Arial,sans-serif; font-size:16px; line-height:1.6; color:#9aa4b8;">
-              <p style="margin:0 0 4px;">Talk next week,</p>
-              <p style="margin:0; font-size:18px; font-weight:800; letter-spacing:-0.02em;">
-                <span style="color:#ffffff;">The </span><span style="color:#7dd3fc;">Inference</span>
-              </p>
+            <td class="px" style="padding:36px 48px 0;">
+              <p style="margin:0 0 14px; font-family:Arial,Helvetica,sans-serif; font-size:19px; font-weight:700; letter-spacing:-0.01em; color:#11110F;">Your industries</p>
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="border:1px solid #CBC8BE; border-radius:6px;">
+                ${industryRowsHtml}
+              </table>
+              <p style="margin:14px 0 0; font-family:Arial,Helvetica,sans-serif; font-size:14px;"><a href="https://the-interface-azal.vercel.app" style="color:#3157D5; text-decoration:none; font-weight:700;">Edit your industries &rarr;</a></p>
+            </td>
+          </tr>
+
+          <!-- CTA -->
+          <tr>
+            <td class="px" style="padding:34px 48px 0;">
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"><tr>
+                <td class="cta-td" style="border-radius:6px; background-color:#3157D5;">
+                  <!--[if mso]>
+                  <v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="https://the-interface-azal.vercel.app" style="height:52px;v-text-anchor:middle;width:640px;" arcsize="6%" strokecolor="#3157D5" fillcolor="#3157D5">
+                  <w:anchorlock/>
+                  <center style="color:#FAF9F5;font-family:Arial,sans-serif;font-size:17px;font-weight:bold;">View your Brief &rarr;</center>
+                  </v:roundrect>
+                  <![endif]-->
+                  <!--[if !mso]><!-- -->
+                  <a class="cta-link" href="https://the-interface-azal.vercel.app" style="display:block; padding:16px 0; font-family:Arial,Helvetica,sans-serif; font-size:17px; font-weight:700; color:#FAF9F5; text-decoration:none; border-radius:6px; text-align:center;">View your Brief &rarr;</a>
+                  <!--<![endif]-->
+                </td>
+              </tr></table>
+            </td>
+          </tr>
+
+          <!-- What to expect -->
+          <tr>
+            <td class="px" style="padding:44px 48px 0;">
+              <p style="margin:0 0 6px; font-family:Arial,Helvetica,sans-serif; font-size:19px; font-weight:700; letter-spacing:-0.01em; color:#11110F;">What to expect</p>
+              <div style="height:2px; width:36px; background-color:#3157D5; margin:12px 0 20px; font-size:0; line-height:0;">&nbsp;</div>
+              <p style="margin:0 0 4px; font-family:Arial,Helvetica,sans-serif; font-size:15px; font-weight:700; color:#11110F;">One story per industry</p>
+              <p style="margin:0 0 16px; font-family:Arial,Helvetica,sans-serif; font-size:14px; line-height:1.55; color:#7A7570;">Focused analysis, not endless links.</p>
+              <div style="height:1px; background-color:#D8D4CB; font-size:0; line-height:0; margin-bottom:16px;">&nbsp;</div>
+              <p style="margin:0 0 4px; font-family:Arial,Helvetica,sans-serif; font-size:15px; font-weight:700; color:#11110F;">Delivered every Monday</p>
+              <p style="margin:0 0 16px; font-family:Arial,Helvetica,sans-serif; font-size:14px; line-height:1.55; color:#7A7570;">A concise briefing designed to be read, not saved for later.</p>
+              <div style="height:1px; background-color:#D8D4CB; font-size:0; line-height:0; margin-bottom:16px;">&nbsp;</div>
+              <p style="margin:0 0 4px; font-family:Arial,Helvetica,sans-serif; font-size:15px; font-weight:700; color:#11110F;">Built around your interests</p>
+              <p style="margin:0; font-family:Arial,Helvetica,sans-serif; font-size:14px; line-height:1.55; color:#7A7570;">Add or remove industries whenever you choose.</p>
+            </td>
+          </tr>
+
+          <!-- Featured story card -->
+          <tr>
+            <td class="px" style="padding:28px 48px 44px;">
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color:#E8EDFA; border-radius:10px;">
+                <tr>
+                  <td style="padding:24px 26px 22px;">
+                    <p style="margin:0 0 10px; font-family:Arial,Helvetica,sans-serif; font-size:11px; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:#3157D5;">Start here &middot; ${featuredName}</p>
+                    <p style="margin:0 0 10px; font-family:Arial,Helvetica,sans-serif; font-size:20px; font-weight:700; letter-spacing:-0.02em; line-height:1.2; color:#11110F;">${featuredMeta.headline}</p>
+                    <p style="margin:0 0 14px; font-family:Arial,Helvetica,sans-serif; font-size:14px; line-height:1.6; color:#4A4740;">${featuredMeta.body}</p>
+                    <a href="https://the-interface-azal.vercel.app" style="font-family:Arial,Helvetica,sans-serif; font-size:14px; font-weight:700; color:#3157D5; text-decoration:none;">Read the story &rarr;</a>
+                  </td>
+                </tr>
+              </table>
             </td>
           </tr>
 
           <!-- Footer -->
           <tr>
-            <td class="px" style="padding:24px 48px 34px; border-top:1px solid rgba(125,211,252,0.08); font-family:'Helvetica Neue',Helvetica,Arial,sans-serif; font-size:12px; line-height:1.7; color:#565d6e;">
-              You&rsquo;re receiving this because you subscribed at The Inference.<br>
-              <a href="https://app.beehiiv.com/unsubscribe" style="color:#7c8696; text-decoration:underline;">Unsubscribe</a>
+            <td style="background-color:#141210; padding:28px 48px 24px;">
+              <p style="margin:0 0 6px; font-family:Arial,Helvetica,sans-serif; font-size:15px; font-weight:700; color:#ffffff;">The Inference</p>
+              <p style="margin:0 0 18px; font-family:Arial,Helvetica,sans-serif; font-size:13px; line-height:1.55; color:#6B6660;">A weekly briefing on how AI is changing specific industries.</p>
+              <p style="margin:0 0 18px; font-family:Arial,Helvetica,sans-serif; font-size:13px; color:#6B6660;">
+                <a href="https://the-interface-azal.vercel.app" style="color:#8A8580; text-decoration:underline;">Manage preferences</a>
+                &nbsp;&middot;&nbsp;
+                <a href="https://app.beehiiv.com/unsubscribe" style="color:#8A8580; text-decoration:underline;">Unsubscribe</a>
+              </p>
+              <p style="margin:0; font-family:Arial,Helvetica,sans-serif; font-size:12px; color:#4A4740;">&copy; 2026 The Inference. All rights reserved.</p>
             </td>
           </tr>
 
@@ -275,6 +270,16 @@ function buildWelcomeEmail(industries: string[]): string {
 </html>`;
 }
 
+// (kept for featured story body copy)
+const ALL_CHIPS = [
+  { slug: "finance",    name: "Finance",    color: "#4ade80" },
+  { slug: "education",  name: "Education",  color: "#fbbf24" },
+  { slug: "law",        name: "Law",        color: "#a78bfa" },
+  { slug: "healthcare", name: "Healthcare", color: "#f87171" },
+  { slug: "work",       name: "Work",       color: "#38bdf8" },
+  { slug: "startups",   name: "Startups",   color: "#fb923c" },
+  { slug: "media",      name: "Media",      color: "#f472b6" },
+];
 // ─── Route handler ─────────────────────────────────────────────────────────
 
 export async function POST(req: NextRequest) {
