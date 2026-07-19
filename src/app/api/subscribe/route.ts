@@ -86,34 +86,38 @@ const INDUSTRY_SHORT: Record<string, { name: string; desc: string }> = {
   media:      { name: "Media",      desc: "Publishing, entertainment and content creation." },
 };
 
-// ─── Email builder (cream/editorial design) ────────────────────────────────
+// ─── Email builder ─────────────────────────────────────────────────────────
 
 function buildWelcomeEmail(selectedSlugs: string[]): string {
   const slugs = selectedSlugs.length > 0 ? selectedSlugs : ["finance"];
 
-  // Industry rows — one per selected industry
+  // Dynamic industry count label
+  const countWords = ["", "One", "Two", "Three", "Four", "Five", "Six", "Seven"];
+  const nLabel = countWords[slugs.length] ?? String(slugs.length);
+  const industryLabel = `${nLabel} ${slugs.length === 1 ? "industry" : "industries"}, chosen by you.`;
+
+  // Industry rows with horizontal dividers (no bordered card)
   const industryRowsHtml = slugs.map((slug, i) => {
     const meta = INDUSTRY_SHORT[slug] ?? { name: slug, desc: "" };
     const num  = String(i + 1).padStart(2, "0");
-    const isLast = i === slugs.length - 1;
+    const isFirst = i === 0;
+    const isLast  = i === slugs.length - 1;
+    const topPad  = isFirst ? "0" : "16px";
+    const botPad  = isLast  ? "0" : "16px";
     return `
-                <tr>
-                  <td style="padding:18px 20px;${isLast ? "" : " border-bottom:1px solid #CBC8BE;"}">
-                    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"><tr>
-                      <td valign="top" width="34" style="font-family:Arial,Helvetica,sans-serif; font-size:14px; font-weight:700; color:#3157D5;">${num}</td>
-                      <td style="font-family:Arial,Helvetica,sans-serif;">
-                        <div style="font-size:16px; font-weight:700; color:#11110F;">${meta.name}</div>
-                        <div style="font-size:14px; color:#6C6962; margin-top:3px;">${meta.desc}</div>
-                      </td>
-                    </tr></table>
-                  </td>
-                </tr>`;
+              <tr>
+                <td style="padding:${topPad} 0 ${botPad};">
+                  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"><tr>
+                    <td valign="top" width="34" style="font-family:Arial,Helvetica,sans-serif; font-size:13px; font-weight:700; color:#3157D5; padding-top:2px;">${num}</td>
+                    <td style="font-family:Arial,Helvetica,sans-serif;">
+                      <div style="font-size:16px; font-weight:700; color:#11110F; line-height:1.2;">${meta.name}</div>
+                      <div style="font-size:13.5px; color:#5A6080; margin-top:3px;">${meta.desc}</div>
+                    </td>
+                  </tr></table>
+                </td>
+              </tr>${isLast ? "" : `
+              <tr><td height="1" style="height:1px; background-color:#C5CCE8; padding:0; line-height:0; font-size:0;">&nbsp;</td></tr>`}`;
   }).join("");
-
-  // Featured story — first selected industry
-  const featuredSlug = slugs[0];
-  const featuredMeta = INDUSTRY_META[featuredSlug] ?? INDUSTRY_META.finance;
-  const featuredName = INDUSTRY_SHORT[featuredSlug]?.name ?? featuredMeta.name;
 
   return `<!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
@@ -136,127 +140,100 @@ function buildWelcomeEmail(selectedSlugs: string[]): string {
     a { color: #3157D5; }
     @media only screen and (max-width: 620px) {
       .container { width: 100% !important; }
-      .px { padding-left: 22px !important; padding-right: 22px !important; }
-      .h1 { font-size: 32px !important; line-height: 1.2 !important; }
-      .cta-td { display: block !important; width: 100% !important; }
-      .cta-link { display: block !important; text-align: center !important; }
+      .px { padding-left: 24px !important; padding-right: 24px !important; }
+      .h1 { font-size: 34px !important; line-height: 1.12 !important; }
     }
   </style>
 </head>
-<body style="margin:0; padding:0; background-color:#F3F1EA;">
-  <div style="display:none; max-height:0; overflow:hidden; mso-hide:all; font-size:1px; line-height:1px; color:#F3F1EA; opacity:0;">
+<body style="margin:0; padding:0; background-color:#F0EFE9;">
+  <div style="display:none; max-height:0; overflow:hidden; mso-hide:all; font-size:1px; line-height:1px; color:#F0EFE9; opacity:0;">
     Your personalised Brief is ready. Here&rsquo;s what to expect from The Inference, every Monday.
   </div>
 
-  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color:#F3F1EA;">
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color:#F0EFE9;">
     <tr>
       <td align="center" style="padding:0;">
 
-        <!-- Top cobalt rule -->
+        <!-- Top cobalt bar -->
         <table role="presentation" class="container" width="640" cellpadding="0" cellspacing="0" border="0" style="width:640px; max-width:640px;">
-          <tr><td style="height:4px; background-color:#3157D5; line-height:0; font-size:0;">&nbsp;</td></tr>
+          <tr><td height="4" style="height:4px; background-color:#3157D5; line-height:0; font-size:0;">&nbsp;</td></tr>
         </table>
 
-        <table role="presentation" class="container" width="640" cellpadding="0" cellspacing="0" border="0" style="width:640px; max-width:640px; background-color:#FAF9F5;">
+        <table role="presentation" class="container" width="640" cellpadding="0" cellspacing="0" border="0" style="width:640px; max-width:640px; background-color:#FFFFFF;">
 
-          <!-- Header -->
+          <!-- ─── HEADER ─── -->
           <tr>
-            <td class="px" style="padding:34px 48px 22px;">
+            <td class="px" style="padding:28px 48px 22px;">
               <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"><tr>
-                <td valign="middle" style="font-family:Arial,Helvetica,sans-serif; font-size:20px; font-weight:700; letter-spacing:-0.01em; color:#11110F;">The Inference</td>
-                <td valign="middle" align="right" style="font-family:Arial,Helvetica,sans-serif; font-size:11.5px; font-weight:700; letter-spacing:0.14em; text-transform:uppercase; color:#6C6962;">Welcome</td>
+                <td valign="middle" style="font-family:Arial,Helvetica,sans-serif; font-size:18px; font-weight:700; letter-spacing:-0.01em; color:#11110F;">The Inference</td>
+                <td valign="middle" align="right" style="font-family:Arial,Helvetica,sans-serif; font-size:11px; font-weight:600; letter-spacing:0.1em; text-transform:uppercase; color:#9A9790; white-space:nowrap;">ISSUE 000 &middot; WELCOME</td>
               </tr></table>
             </td>
           </tr>
-          <tr><td class="px" style="padding:0 48px;"><div style="height:1px; background-color:#CBC8BE; line-height:0; font-size:0;">&nbsp;</div></td></tr>
+          <tr><td height="1" style="height:1px; background-color:#E5E2DC; line-height:0; font-size:0;">&nbsp;</td></tr>
 
-          <!-- Headline -->
+          <!-- ─── HERO ─── -->
           <tr>
-            <td class="px" style="padding:36px 48px 0;">
-              <p style="margin:0; font-family:Arial,Helvetica,sans-serif; font-size:12.5px; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; color:#3157D5;">Welcome to The Inference</p>
-              <h1 class="h1" style="margin:16px 0 0; font-family:Arial,Helvetica,sans-serif; font-size:42px; line-height:1.18; font-weight:700; letter-spacing:-0.015em; color:#11110F;">You are in. Your AI briefing starts here.</h1>
-            </td>
-          </tr>
-
-          <!-- Intro -->
-          <tr>
-            <td class="px" style="padding:20px 48px 0; font-family:Arial,Helvetica,sans-serif; font-size:16.5px; line-height:1.65; color:#3a3934;">
-              <p style="margin:0;">Thanks for joining The Inference. Each week, we examine what artificial intelligence is genuinely changing across the industries you follow &mdash; without the hype, noise or generic roundups.</p>
-              <p style="margin:14px 0 0;">Your personalised Brief will arrive every Monday.</p>
-            </td>
-          </tr>
-
-          <!-- Your industries -->
-          <tr>
-            <td class="px" style="padding:36px 48px 0;">
-              <p style="margin:0 0 14px; font-family:Arial,Helvetica,sans-serif; font-size:19px; font-weight:700; letter-spacing:-0.01em; color:#11110F;">Your industries</p>
-              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="border:1px solid #CBC8BE; border-radius:6px;">
-                ${industryRowsHtml}
-              </table>
-              <p style="margin:14px 0 0; font-family:Arial,Helvetica,sans-serif; font-size:14px;"><a href="https://the-interface-azal.vercel.app" style="color:#3157D5; text-decoration:none; font-weight:700;">Edit your industries &rarr;</a></p>
-            </td>
-          </tr>
-
-          <!-- CTA -->
-          <tr>
-            <td class="px" style="padding:34px 48px 0;">
-              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"><tr>
-                <td class="cta-td" style="border-radius:6px; background-color:#3157D5;">
-                  <!--[if mso]>
-                  <v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="https://the-interface-azal.vercel.app" style="height:52px;v-text-anchor:middle;width:640px;" arcsize="6%" strokecolor="#3157D5" fillcolor="#3157D5">
-                  <w:anchorlock/>
-                  <center style="color:#FAF9F5;font-family:Arial,sans-serif;font-size:17px;font-weight:bold;">View your Brief &rarr;</center>
-                  </v:roundrect>
-                  <![endif]-->
-                  <!--[if !mso]><!-- -->
-                  <a class="cta-link" href="https://the-interface-azal.vercel.app" style="display:block; padding:16px 0; font-family:Arial,Helvetica,sans-serif; font-size:17px; font-weight:700; color:#FAF9F5; text-decoration:none; border-radius:6px; text-align:center;">View your Brief &rarr;</a>
-                  <!--<![endif]-->
-                </td>
-              </tr></table>
-            </td>
-          </tr>
-
-          <!-- What to expect -->
-          <tr>
-            <td class="px" style="padding:44px 48px 0;">
-              <p style="margin:0 0 6px; font-family:Arial,Helvetica,sans-serif; font-size:19px; font-weight:700; letter-spacing:-0.01em; color:#11110F;">What to expect</p>
-              <div style="height:2px; width:36px; background-color:#3157D5; margin:12px 0 20px; font-size:0; line-height:0;">&nbsp;</div>
-              <p style="margin:0 0 4px; font-family:Arial,Helvetica,sans-serif; font-size:15px; font-weight:700; color:#11110F;">One story per industry</p>
-              <p style="margin:0 0 16px; font-family:Arial,Helvetica,sans-serif; font-size:14px; line-height:1.55; color:#7A7570;">Focused analysis, not endless links.</p>
-              <div style="height:1px; background-color:#D8D4CB; font-size:0; line-height:0; margin-bottom:16px;">&nbsp;</div>
-              <p style="margin:0 0 4px; font-family:Arial,Helvetica,sans-serif; font-size:15px; font-weight:700; color:#11110F;">Delivered every Monday</p>
-              <p style="margin:0 0 16px; font-family:Arial,Helvetica,sans-serif; font-size:14px; line-height:1.55; color:#7A7570;">A concise briefing designed to be read, not saved for later.</p>
-              <div style="height:1px; background-color:#D8D4CB; font-size:0; line-height:0; margin-bottom:16px;">&nbsp;</div>
-              <p style="margin:0 0 4px; font-family:Arial,Helvetica,sans-serif; font-size:15px; font-weight:700; color:#11110F;">Built around your interests</p>
-              <p style="margin:0; font-family:Arial,Helvetica,sans-serif; font-size:14px; line-height:1.55; color:#7A7570;">Add or remove industries whenever you choose.</p>
-            </td>
-          </tr>
-
-          <!-- Featured story card -->
-          <tr>
-            <td class="px" style="padding:28px 48px 44px;">
-              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color:#E8EDFA; border-radius:10px;">
+            <td class="px" style="padding:48px 48px 44px;">
+              <p style="margin:0 0 20px; font-family:Arial,Helvetica,sans-serif; font-size:12px; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; color:#3157D5;">YOUR BRIEF IS READY</p>
+              <h1 class="h1" style="margin:0 0 28px; font-family:Arial,Helvetica,sans-serif; font-size:46px; line-height:1.08; font-weight:800; letter-spacing:-0.025em; color:#11110F;">You are in. Your AI briefing starts here.</h1>
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
                 <tr>
-                  <td style="padding:24px 26px 22px;">
-                    <p style="margin:0 0 10px; font-family:Arial,Helvetica,sans-serif; font-size:11px; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:#3157D5;">Start here &middot; ${featuredName}</p>
-                    <p style="margin:0 0 10px; font-family:Arial,Helvetica,sans-serif; font-size:20px; font-weight:700; letter-spacing:-0.02em; line-height:1.2; color:#11110F;">${featuredMeta.headline}</p>
-                    <p style="margin:0 0 14px; font-family:Arial,Helvetica,sans-serif; font-size:14px; line-height:1.6; color:#4A4740;">${featuredMeta.body}</p>
-                    <a href="https://the-interface-azal.vercel.app" style="font-family:Arial,Helvetica,sans-serif; font-size:14px; font-weight:700; color:#3157D5; text-decoration:none;">Read the story &rarr;</a>
-                  </td>
+                  <td width="3" bgcolor="#3157D5" style="background-color:#3157D5; border-radius:2px; font-size:0;">&nbsp;</td>
+                  <td style="padding-left:16px; font-family:Arial,Helvetica,sans-serif; font-size:16px; line-height:1.65; color:#4A4840;">You will receive your personalised Brief every Monday.</td>
                 </tr>
               </table>
             </td>
           </tr>
 
-          <!-- Footer -->
+          <!-- ─── INDUSTRIES (blue/lavender bg) ─── -->
           <tr>
-            <td style="background-color:#141210; padding:28px 48px 24px;">
-              <p style="margin:0 0 6px; font-family:Arial,Helvetica,sans-serif; font-size:15px; font-weight:700; color:#ffffff;">The Inference</p>
+            <td class="px" style="padding:40px 48px; background-color:#E4EAF9;">
+              <p style="margin:0 0 8px; font-family:Arial,Helvetica,sans-serif; font-size:12px; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; color:#3157D5;">YOUR BRIEF COVERS</p>
+              <p style="margin:0 0 24px; font-family:Arial,Helvetica,sans-serif; font-size:22px; font-weight:700; letter-spacing:-0.02em; line-height:1.2; color:#11110F;">${industryLabel}</p>
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+                ${industryRowsHtml}
+              </table>
+              <p style="margin:22px 0 0; font-family:Arial,Helvetica,sans-serif; font-size:14px;">
+                <a href="https://the-interface-azal.vercel.app" style="color:#3157D5; text-decoration:none; font-weight:700;">Edit your industries &rarr;</a>
+              </p>
+            </td>
+          </tr>
+
+          <!-- ─── CTA (cobalt bg) ─── -->
+          <tr>
+            <td class="px" style="padding:40px 48px; background-color:#3157D5;">
+              <p style="margin:0 0 6px; font-family:Arial,Helvetica,sans-serif; font-size:24px; font-weight:700; letter-spacing:-0.02em; color:#FFFFFF;">Your Brief is waiting.</p>
+              <p style="margin:0 0 26px; font-family:Arial,Helvetica,sans-serif; font-size:15px; line-height:1.6; color:#B8C5EC;">Read it whenever suits you &mdash; it&rsquo;ll be there Monday too.</p>
+              <!--[if mso]>
+              <v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="https://the-interface-azal.vercel.app" style="height:46px;v-text-anchor:middle;width:210px;" arcsize="10%" strokecolor="#FFFFFF" fillcolor="#FFFFFF">
+              <w:anchorlock/>
+              <center style="color:#3157D5;font-family:Arial,sans-serif;font-size:15px;font-weight:bold;">View your Brief &rarr;</center>
+              </v:roundrect>
+              <![endif]-->
+              <!--[if !mso]><!-- -->
+              <table role="presentation" cellpadding="0" cellspacing="0" border="0">
+                <tr>
+                  <td style="border-radius:6px; background-color:#FFFFFF;">
+                    <a href="https://the-interface-azal.vercel.app" style="display:block; padding:13px 28px; font-family:Arial,Helvetica,sans-serif; font-size:15px; font-weight:700; color:#3157D5; text-decoration:none; border-radius:6px; white-space:nowrap;">View your Brief &rarr;</a>
+                  </td>
+                </tr>
+              </table>
+              <!--<![endif]-->
+            </td>
+          </tr>
+
+          <!-- ─── FOOTER ─── -->
+          <tr>
+            <td style="background-color:#0F0E0C; padding:28px 48px 26px;">
+              <p style="margin:0 0 6px; font-family:Arial,Helvetica,sans-serif; font-size:15px; font-weight:700; color:#FFFFFF;">The Inference</p>
               <p style="margin:0 0 18px; font-family:Arial,Helvetica,sans-serif; font-size:13px; line-height:1.55; color:#6B6660;">A weekly briefing on how AI is changing specific industries.</p>
-              <p style="margin:0 0 18px; font-family:Arial,Helvetica,sans-serif; font-size:13px; color:#6B6660;">
-                <a href="https://the-interface-azal.vercel.app" style="color:#8A8580; text-decoration:underline;">Manage preferences</a>
+              <p style="margin:0 0 16px; font-family:Arial,Helvetica,sans-serif; font-size:13px; color:#6B6660;">
+                <a href="https://the-interface-azal.vercel.app" style="color:#9A9790; text-decoration:underline;">Manage preferences</a>
                 &nbsp;&middot;&nbsp;
-                <a href="https://app.beehiiv.com/unsubscribe" style="color:#8A8580; text-decoration:underline;">Unsubscribe</a>
+                <a href="https://app.beehiiv.com/unsubscribe" style="color:#9A9790; text-decoration:underline;">Unsubscribe</a>
+                &nbsp;&middot;&nbsp;
+                <a href="mailto:hello@theinference.co" style="color:#9A9790; text-decoration:underline;">Contact</a>
               </p>
               <p style="margin:0; font-family:Arial,Helvetica,sans-serif; font-size:12px; color:#4A4740;">&copy; 2026 The Inference. All rights reserved.</p>
             </td>
