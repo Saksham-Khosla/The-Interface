@@ -30,10 +30,10 @@ export default function BriefPage({
     e.preventDefault();
     if (!subEmail || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(subEmail)) return;
     try {
-      await fetch("/api/subscribe", {
+      await fetch("/api/invite", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email: subEmail, industries: selectedIndustries.map((i) => i.slug) }),
+        body: JSON.stringify({ refereeEmail: subEmail, referrerEmail: email }),
       });
     } catch {}
     setSubDone(true);
