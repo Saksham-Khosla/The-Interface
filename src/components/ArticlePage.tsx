@@ -100,7 +100,7 @@ export default function ArticlePage({
             {industry.excerpt}
           </p>
           <div style={{ fontSize: 12, color: industry.titleClr, opacity: 0.5, display: "flex", alignItems: "center", gap: 12 }}>
-            <span>The Inference</span>
+            <span>{articleData?.author ?? "The Inference"}</span>
             <span style={{ width: 3, height: 3, borderRadius: "50%", background: industry.accent, opacity: 0.4, display: "inline-block" }} />
             <span>{industry.readTime}</span>
             <span style={{ width: 3, height: 3, borderRadius: "50%", background: industry.accent, opacity: 0.4, display: "inline-block" }} />
