@@ -5,8 +5,19 @@ export interface Issue {
   description: string;
   category: string;
   readingTime: number;
+  issueNumber?: number;
+  publishedAt?: string;
   featured?: boolean;
 }
+
+// ─── Active publication metadata ────────────────────────────────────────────
+// Update `publishedAt` when a new issue goes live.
+// Set `issueNumber` when you assign real numbers (1, 2, 3 …).
+// Leave issueNumber as null until you decide on numbering.
+export const currentIssue = {
+  publishedAt: "20 July 2026",
+  issueNumber: null as number | null,
+};
 
 export const issues: Issue[] = [];
 

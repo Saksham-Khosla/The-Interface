@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://the-interface-azal.vercel.app/sitemap.xml

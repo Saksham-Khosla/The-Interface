@@ -159,7 +159,7 @@ export default function IssuePage({ params }: Props) {
         <div className="mx-auto max-w-6xl">
           <CTABlock
             title="Enjoyed this briefing?"
-            subtitle="Subscribe free and get our briefings delivered to your inbox every Tuesday. It takes 10 seconds to sign up."
+            subtitle="Subscribe free and get our weekly briefings delivered to your inbox. It takes 10 seconds to sign up."
           />
         </div>
       </section>

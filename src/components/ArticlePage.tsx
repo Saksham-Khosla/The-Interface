@@ -104,7 +104,7 @@ export default function ArticlePage({
             <span style={{ width: 3, height: 3, borderRadius: "50%", background: industry.accent, opacity: 0.4, display: "inline-block" }} />
             <span>{industry.readTime}</span>
             <span style={{ width: 3, height: 3, borderRadius: "50%", background: industry.accent, opacity: 0.4, display: "inline-block" }} />
-            <span>Issue #98</span>
+            <span>{industry.name}</span>
           </div>
         </div>
       </div>
@@ -135,7 +135,7 @@ export default function ArticlePage({
       {/* Article footer */}
       <div style={{ borderTop: "1px solid var(--ink)" }}>
         <div style={{ maxWidth: 780, margin: "0 auto", padding: "20px var(--pad)", display: "flex", alignItems: "center", justifyContent: "space-between", gap: 12, flexWrap: "wrap" }}>
-          <span style={{ fontSize: 13, color: "var(--ink-3)" }}>Issue #98 · {industry.name}</span>
+          <span style={{ fontSize: 13, color: "var(--ink-3)" }}>{industry.name}</span>
           <button
             onClick={() => discRef.current?.scrollIntoView({ behavior: "smooth" })}
             style={{

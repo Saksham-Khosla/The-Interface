@@ -39,7 +39,7 @@ export default function IssuesPage() {
         <div className="mx-auto max-w-6xl">
           <CTABlock
             title="Get the next briefing in your inbox."
-            subtitle="Subscribe free and receive every new briefing the moment it drops — every Tuesday."
+            subtitle="Subscribe free and receive every new briefing the moment it drops."
           />
         </div>
       </section>

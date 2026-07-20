@@ -1,7 +1,6 @@
 "use client";
 
-const ISSUE_NUM = 98;
-const ISSUE_DATE = "Monday, 14 July 2026";
+import { currentIssue } from "@/lib/issues";
 
 export default function Footer() {
   const goView = (view: string) => {
@@ -26,12 +25,9 @@ export default function Footer() {
         <div className="ti-footer-top">
           {/* Brand */}
           <div>
-            <span style={{ fontSize: 15, fontWeight: 800, letterSpacing: "-0.025em", color: "#fff", display: "block", marginBottom: 10 }}>
+            <span style={{ fontSize: 15, fontWeight: 800, letterSpacing: "-0.025em", color: "#fff", display: "block" }}>
               The Inference
             </span>
-            <p style={{ fontSize: 13, lineHeight: 1.65, color: "rgba(255,255,255,0.38)" }}>
-              One story per industry, per week. What AI is actually changing — not what the press release says.
-            </p>
           </div>
 
           {/* Publication */}
@@ -67,19 +63,22 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* This issue */}
-          <div>
-            <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "rgba(255,255,255,0.25)", marginBottom: 14 }}>
-              This issue
-            </div>
-            <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-              {[`Issue #${ISSUE_NUM}`, ISSUE_DATE, "theinference.co"].map((item, i) => (
-                <span key={i} style={{ fontSize: 13, color: "rgba(255,255,255,0.45)", cursor: "default" }}>
-                  {item}
+          {/* This issue — only shown when real metadata exists */}
+          {currentIssue.issueNumber !== null && (
+            <div>
+              <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "rgba(255,255,255,0.25)", marginBottom: 14 }}>
+                This issue
+              </div>
+              <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+                <span style={{ fontSize: 13, color: "rgba(255,255,255,0.45)", cursor: "default" }}>
+                  Issue #{currentIssue.issueNumber}
                 </span>
-              ))}
+                <span style={{ fontSize: 13, color: "rgba(255,255,255,0.45)", cursor: "default" }}>
+                  {currentIssue.publishedAt}
+                </span>
+              </div>
             </div>
-          </div>
+          )}
         </div>
 
         {/* Bottom bar */}

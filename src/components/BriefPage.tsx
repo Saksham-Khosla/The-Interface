@@ -2,11 +2,8 @@
 
 import { useState } from "react";
 import { Industry } from "@/lib/industries";
-import { quickTakes } from "@/lib/quickTakes";
+import { currentIssue } from "@/lib/issues";
 import { ArtPanel, SecArtPanel } from "./ArtPanel";
-
-const ISSUE_NUM = 98;
-const ISSUE_DATE = "Monday, 14 July 2026";
 
 interface BriefPageProps {
   selectedIndustries: Industry[];
@@ -51,7 +48,7 @@ export default function BriefPage({
             <div>
               <div style={{ width: 28, height: 3, background: "var(--accent)", borderRadius: 2, marginBottom: 14 }} />
               <p className="eyebrow" style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "var(--ink-3)", marginBottom: 14, display: "flex", alignItems: "center", gap: 10 }}>
-                Your Brief <span style={{ color: "var(--rule-lt)" }}>/</span> Issue #{ISSUE_NUM}
+                Your Brief
               </p>
               <h1
                 className="ti-brief-headline"
@@ -62,11 +59,11 @@ export default function BriefPage({
             </div>
             <div style={{ paddingBottom: 4 }}>
               <p style={{ fontSize: 15, lineHeight: 1.65, color: "var(--ink-2)", marginBottom: 20 }}>
-                A concise weekly briefing on what AI is genuinely, measurably changing — in the industries you follow.
+                A concise weekly briefing on AI across the industries you follow.
               </p>
               <div style={{ fontSize: 12, color: "var(--ink-3)", lineHeight: 1.7 }}>
-                <strong style={{ color: "var(--ink-2)", fontWeight: 600 }}>{ISSUE_DATE}</strong><br />
-                Delivered every Monday — one story per industry.
+                <strong style={{ color: "var(--ink-2)", fontWeight: 600 }}>{currentIssue.publishedAt}</strong><br />
+                Published weekly
               </div>
             </div>
           </div>
@@ -176,33 +173,6 @@ export default function BriefPage({
             </div>
           </div>
         )}
-      </div>
-
-      {/* In Brief */}
-      <div style={{ padding: "44px 0", borderBottom: "1px solid var(--rule)", background: "var(--accent-faint)" }}>
-        <div style={{ maxWidth: "var(--w)", margin: "0 auto", padding: "0 var(--pad)" }}>
-          <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "var(--ink-3)", marginBottom: 24 }}>
-            In Brief
-          </p>
-          <div className="ti-inbrief-grid">
-            {quickTakes.map((take, i) => (
-              <div
-                key={i}
-                className={`ti-inbrief-item ${i % 2 === 0 ? "odd" : "even"}`}
-              >
-                <p style={{ fontSize: 10, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "var(--ink-3)", marginBottom: 6 }}>
-                  {take.tag}
-                </p>
-                <p style={{ fontSize: 15, fontWeight: 700, letterSpacing: "-0.02em", lineHeight: 1.35, color: "var(--ink)", marginBottom: 5 }}>
-                  {take.text}
-                </p>
-                <p style={{ fontSize: 13, lineHeight: 1.6, color: "var(--ink-2)" }}>
-                  {take.body}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
       </div>
 
       {/* Subscription strip */}

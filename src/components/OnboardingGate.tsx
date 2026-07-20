@@ -8,7 +8,6 @@ import ArticlePage from "./ArticlePage";
 import EditIndustriesModal from "./EditIndustriesModal";
 
 const STORAGE_KEY = "the-inference-prefs";
-const ISSUE_NUM = 98;
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 type OnboardStep = "checking" | "welcome" | "industries" | "email" | "success" | "home";

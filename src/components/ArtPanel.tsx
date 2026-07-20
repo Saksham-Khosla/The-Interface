@@ -77,7 +77,7 @@ export function ArtPanel({ id, className = "" }: ArtPanelProps) {
   if (id === "work") {
     return (
       <div className={className} style={{ position: "absolute", inset: 0, background: "#F5F2EB", overflow: "hidden", padding: 24 }}>
-        <div style={{ fontSize: 9, fontWeight: 700, letterSpacing: "0.09em", textTransform: "uppercase", color: "#9C978F", marginBottom: 10 }}>July 2026</div>
+        <div style={{ fontSize: 9, fontWeight: 700, letterSpacing: "0.09em", textTransform: "uppercase", color: "#9C978F", marginBottom: 10 }}>This Week</div>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(5,1fr)", gap: 3, marginBottom: 3 }}>
           {["M","T","W","T","F"].map((d, i) => (
             <div key={i} style={{ fontSize: 8, fontWeight: 700, color: "#9C978F", textAlign: "center", paddingBottom: 4 }}>{d}</div>

@@ -147,7 +147,7 @@ function buildWelcomeEmail(selectedSlugs: string[]): string {
 </head>
 <body style="margin:0; padding:0; background-color:#F0EFE9;">
   <div style="display:none; max-height:0; overflow:hidden; mso-hide:all; font-size:1px; line-height:1px; color:#F0EFE9; opacity:0;">
-    Your personalised Brief is ready. Here&rsquo;s what to expect from The Inference, every Monday.
+    Your personalised Brief is ready. Here&rsquo;s what to expect from The Inference, weekly.
   </div>
 
   <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color:#F0EFE9;">
@@ -166,7 +166,7 @@ function buildWelcomeEmail(selectedSlugs: string[]): string {
             <td class="px" style="padding:28px 48px 22px;">
               <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"><tr>
                 <td valign="middle" style="font-family:Arial,Helvetica,sans-serif; font-size:18px; font-weight:700; letter-spacing:-0.01em; color:#11110F;">The Inference</td>
-                <td valign="middle" align="right" style="font-family:Arial,Helvetica,sans-serif; font-size:11px; font-weight:600; letter-spacing:0.1em; text-transform:uppercase; color:#9A9790; white-space:nowrap;">ISSUE 000 &middot; WELCOME</td>
+                <td valign="middle" align="right" style="font-family:Arial,Helvetica,sans-serif; font-size:11px; font-weight:600; letter-spacing:0.1em; text-transform:uppercase; color:#9A9790; white-space:nowrap;">WELCOME</td>
               </tr></table>
             </td>
           </tr>
@@ -175,12 +175,11 @@ function buildWelcomeEmail(selectedSlugs: string[]): string {
           <!-- ─── HERO ─── -->
           <tr>
             <td class="px" style="padding:48px 48px 44px;">
-              <p style="margin:0 0 20px; font-family:Arial,Helvetica,sans-serif; font-size:12px; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; color:#3157D5;">YOUR BRIEF IS READY</p>
-              <h1 class="h1" style="margin:0 0 28px; font-family:Arial,Helvetica,sans-serif; font-size:46px; line-height:1.08; font-weight:800; letter-spacing:-0.025em; color:#11110F;">You are in. Your AI briefing starts here.</h1>
+              <h1 class="h1" style="margin:0 0 28px; font-family:Arial,Helvetica,sans-serif; font-size:46px; line-height:1.08; font-weight:800; letter-spacing:-0.025em; color:#11110F;">You are in.</h1>
               <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
                 <tr>
                   <td width="3" bgcolor="#3157D5" style="background-color:#3157D5; border-radius:2px; font-size:0;">&nbsp;</td>
-                  <td style="padding-left:16px; font-family:Arial,Helvetica,sans-serif; font-size:16px; line-height:1.65; color:#4A4840;">You will receive your personalised Brief every Monday.</td>
+                  <td style="padding-left:16px; font-family:Arial,Helvetica,sans-serif; font-size:16px; line-height:1.65; color:#4A4840;">You will receive your personalised Brief weekly.</td>
                 </tr>
               </table>
             </td>
@@ -204,7 +203,7 @@ function buildWelcomeEmail(selectedSlugs: string[]): string {
           <tr>
             <td class="px" style="padding:40px 48px; background-color:#3157D5;">
               <p style="margin:0 0 6px; font-family:Arial,Helvetica,sans-serif; font-size:24px; font-weight:700; letter-spacing:-0.02em; color:#FFFFFF;">Your Brief is waiting.</p>
-              <p style="margin:0 0 26px; font-family:Arial,Helvetica,sans-serif; font-size:15px; line-height:1.6; color:#B8C5EC;">Read it whenever suits you &mdash; it&rsquo;ll be there Monday too.</p>
+              <p style="margin:0 0 26px; font-family:Arial,Helvetica,sans-serif; font-size:15px; line-height:1.6; color:#B8C5EC;">Read it whenever suits you.</p>
               <!--[if mso]>
               <v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="https://the-interface-azal.vercel.app" style="height:46px;v-text-anchor:middle;width:210px;" arcsize="10%" strokecolor="#FFFFFF" fillcolor="#FFFFFF">
               <w:anchorlock/>
@@ -247,16 +246,6 @@ function buildWelcomeEmail(selectedSlugs: string[]): string {
 </html>`;
 }
 
-// (kept for featured story body copy)
-const ALL_CHIPS = [
-  { slug: "finance",    name: "Finance",    color: "#4ade80" },
-  { slug: "education",  name: "Education",  color: "#fbbf24" },
-  { slug: "law",        name: "Law",        color: "#a78bfa" },
-  { slug: "healthcare", name: "Healthcare", color: "#f87171" },
-  { slug: "work",       name: "Work",       color: "#38bdf8" },
-  { slug: "startups",   name: "Startups",   color: "#fb923c" },
-  { slug: "media",      name: "Media",      color: "#f472b6" },
-];
 // ─── Route handler ─────────────────────────────────────────────────────────
 
 export async function POST(req: NextRequest) {
